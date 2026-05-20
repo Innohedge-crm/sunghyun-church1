@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>성현교회 SUNGHYUN CHURCH</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -13,141 +13,140 @@
   --primary-light:#e8f0fb;
   --accent:#2979c8;
   --gold:#c9a84c;
-  --text:#1a1a1a;
-  --text-muted:#666;
+  --text:#111;
+  --text-muted:#555;
   --bg:#fff;
   --bg-alt:#f4f7fc;
-  --border:rgba(0,0,0,0.08);
-  --radius:12px;
+  --border:rgba(0,0,0,0.1);
+  --radius:14px;
 }
-body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg);line-height:1.7;}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg);line-height:1.8;font-size:18px;}
 
 /* NAV */
-nav{background:var(--primary-dark);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.2);}
-.brand{display:flex;align-items:center;gap:8px;cursor:pointer;}
-.brand-cross{color:var(--gold);font-size:1.2rem;}
-.brand-text strong{color:#fff;font-size:0.95rem;font-family:'Noto Serif KR',serif;}
-.brand-text span{color:rgba(255,255,255,0.5);font-size:0.6rem;letter-spacing:2px;display:block;}
-.hamburger{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;}
-.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all 0.3s;}
-.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+nav{background:var(--primary-dark);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,0.2);}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.brand-cross{color:var(--gold);font-size:1.5rem;}
+.brand-text strong{color:#fff;font-size:1.1rem;font-family:'Noto Serif KR',serif;}
+.brand-text span{color:rgba(255,255,255,0.5);font-size:0.65rem;letter-spacing:2px;display:block;}
+.hamburger{background:none;border:none;cursor:pointer;padding:8px;display:flex;flex-direction:column;gap:6px;}
+.hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(6px,6px);}
 .hamburger.open span:nth-child(2){opacity:0;}
-.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);}
 
 /* MOBILE MENU */
-.mobile-menu{position:fixed;top:56px;left:0;right:0;background:var(--primary-dark);z-index:199;transform:translateY(-100%);opacity:0;transition:all 0.3s;pointer-events:none;}
+.mobile-menu{position:fixed;top:64px;left:0;right:0;background:var(--primary-dark);z-index:199;transform:translateY(-100%);opacity:0;transition:all 0.3s;pointer-events:none;}
 .mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all;}
-.mobile-menu a{display:block;color:rgba(255,255,255,0.85);text-decoration:none;padding:0.9rem 1.5rem;font-size:0.95rem;border-bottom:0.5px solid rgba(255,255,255,0.1);cursor:pointer;}
-.mobile-menu a:hover, .mobile-menu a.active{background:rgba(255,255,255,0.1);color:#fff;}
+.mobile-menu a{display:block;color:rgba(255,255,255,0.9);text-decoration:none;padding:1.1rem 1.8rem;font-size:1.05rem;font-weight:500;border-bottom:0.5px solid rgba(255,255,255,0.1);cursor:pointer;}
+.mobile-menu a:hover, .mobile-menu a.active{background:rgba(255,255,255,0.12);color:#fff;}
 
 /* PAGE */
 .page{display:none;}
 .page.active{display:block;}
 
 /* HERO */
-.hero{background:var(--primary-dark);color:#fff;text-align:center;padding:3.5rem 1.5rem 3rem;position:relative;overflow:hidden;}
+.hero{background:var(--primary-dark);color:#fff;text-align:center;padding:3rem 1.5rem 2.5rem;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
 .hero-inner{position:relative;z-index:1;}
-.hero-since{font-size:0.7rem;letter-spacing:4px;color:var(--gold);margin-bottom:0.8rem;}
-.hero-cross-big{font-size:2rem;color:var(--gold);margin-bottom:0.8rem;display:block;}
-.hero h1{font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:700;margin-bottom:0.3rem;}
-.hero h1 span{display:block;font-size:0.75rem;font-family:'Noto Sans KR',sans-serif;font-weight:300;letter-spacing:4px;color:rgba(255,255,255,0.55);margin-top:0.3rem;}
-.hero-verse{margin-top:1.5rem;background:rgba(255,255,255,0.07);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:0.9rem 1.2rem;font-size:0.88rem;color:rgba(255,255,255,0.9);line-height:1.8;}
-.hero-verse em{color:var(--gold);font-style:normal;font-weight:500;}
+.hero-since{font-size:0.85rem;letter-spacing:4px;color:var(--gold);margin-bottom:0.8rem;font-weight:500;}
+.hero-cross-big{font-size:2.5rem;color:var(--gold);margin-bottom:0.8rem;display:block;}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:2.2rem;font-weight:700;margin-bottom:0.3rem;}
+.hero h1 span{display:block;font-size:0.85rem;font-family:'Noto Sans KR',sans-serif;font-weight:400;letter-spacing:4px;color:rgba(255,255,255,0.55);margin-top:0.4rem;}
+.hero-verse{margin-top:1.5rem;background:rgba(255,255,255,0.07);border:1px solid rgba(201,168,76,0.35);border-radius:10px;padding:1.1rem 1.3rem;font-size:1rem;color:rgba(255,255,255,0.95);line-height:1.9;font-weight:400;}
+.hero-verse em{color:var(--gold);font-style:normal;font-weight:700;}
 
 /* SUB HERO */
 .sub-hero{background:var(--primary);color:#fff;padding:2rem 1.5rem;text-align:center;}
-.sub-hero h2{font-family:'Noto Serif KR',serif;font-size:1.3rem;font-weight:600;margin-bottom:0.2rem;}
-.sub-hero p{font-size:0.72rem;letter-spacing:3px;color:rgba(255,255,255,0.5);}
+.sub-hero h2{font-family:'Noto Serif KR',serif;font-size:1.5rem;font-weight:700;margin-bottom:0.2rem;}
+.sub-hero p{font-size:0.8rem;letter-spacing:3px;color:rgba(255,255,255,0.5);}
 
 /* SECTION */
-section{padding:2.5rem 1.2rem;}
+section{padding:2.5rem 1.3rem;}
 section.alt{background:var(--bg-alt);}
 .section-head{text-align:center;margin-bottom:2rem;}
-.section-head h2{font-family:'Noto Serif KR',serif;font-size:1.3rem;font-weight:600;color:var(--primary-dark);margin-bottom:0.4rem;}
-.section-head .bar{width:32px;height:2px;background:var(--gold);margin:0.5rem auto;}
-.section-head p{color:var(--text-muted);font-size:0.82rem;}
+.section-head h2{font-family:'Noto Serif KR',serif;font-size:1.45rem;font-weight:700;color:var(--primary-dark);margin-bottom:0.4rem;}
+.section-head .bar{width:36px;height:3px;background:var(--gold);margin:0.6rem auto;border-radius:2px;}
+.section-head p{color:var(--text-muted);font-size:0.95rem;}
 
 /* CARDS */
-.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;max-width:600px;margin:0 auto;}
-.quick-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;}
-.quick-card .icon{font-size:1.5rem;margin-bottom:0.5rem;display:block;}
-.quick-card h3{font-size:0.85rem;font-weight:600;color:var(--primary);margin-bottom:0.2rem;}
-.quick-card p{font-size:0.78rem;color:var(--text-muted);line-height:1.6;}
+.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.9rem;max-width:600px;margin:0 auto;}
+.quick-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem 0.9rem;text-align:center;}
+.quick-card .icon{font-size:1.8rem;margin-bottom:0.6rem;display:block;}
+.quick-card h3{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:0.3rem;}
+.quick-card p{font-size:0.95rem;color:var(--text-muted);line-height:1.7;font-weight:500;}
 
 /* WORSHIP TABLE */
-.wtable{width:100%;border-radius:var(--radius);overflow:hidden;border:0.5px solid var(--border);}
+.wtable{width:100%;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);}
 .wrow{display:grid;grid-template-columns:1.3fr 1fr 1fr;}
 .wrow.head{background:var(--primary);}
 .wrow:not(.head):nth-child(odd){background:var(--primary-light);}
 .wrow:not(.head):nth-child(even){background:#fff;}
-.wcell{padding:0.75rem 0.6rem;font-size:0.8rem;}
-.wrow.head .wcell{color:#fff;font-weight:600;font-size:0.75rem;}
+.wcell{padding:0.9rem 0.7rem;font-size:0.95rem;font-weight:500;line-height:1.5;}
+.wrow.head .wcell{color:#fff;font-weight:700;font-size:0.9rem;}
 
 /* PASTOR */
-.pastor-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;}
-.pastor-top{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1rem;}
-.pastor-avatar{width:80px;height:80px;border-radius:50%;border:2px solid var(--primary);overflow:hidden;flex-shrink:0;}
+.pastor-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;margin-bottom:1rem;}
+.pastor-top{display:flex;gap:1.2rem;align-items:flex-start;margin-bottom:1.1rem;}
+.pastor-avatar{width:90px;height:90px;border-radius:50%;border:3px solid var(--primary);overflow:hidden;flex-shrink:0;}
 .pastor-avatar img{width:100%;height:100%;object-fit:cover;}
-.pastor-name h3{font-size:1rem;font-weight:600;color:var(--primary-dark);margin-bottom:0.2rem;}
-.pastor-name .role{font-size:0.75rem;color:var(--gold);font-weight:500;letter-spacing:0.5px;}
-.pastor-info ul{list-style:none;padding:0;border-top:0.5px solid var(--border);padding-top:0.8rem;}
-.pastor-info li{font-size:0.8rem;color:var(--text-muted);line-height:1.9;padding-left:0.8rem;position:relative;}
-.pastor-info li::before{content:'·';position:absolute;left:0;color:var(--primary);}
+.pastor-name h3{font-size:1.15rem;font-weight:700;color:var(--primary-dark);margin-bottom:0.3rem;}
+.pastor-name .role{font-size:0.9rem;color:var(--gold);font-weight:700;letter-spacing:0.5px;}
+.pastor-info ul{list-style:none;padding:0;border-top:1px solid var(--border);padding-top:0.9rem;}
+.pastor-info li{font-size:0.95rem;color:var(--text-muted);line-height:2;padding-left:1rem;position:relative;font-weight:500;}
+.pastor-info li::before{content:'·';position:absolute;left:0;color:var(--primary);font-weight:700;}
 
 /* COMMITTEE */
-.comm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.7rem;}
-.comm-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:0.9rem;text-align:center;}
-.comm-card .ctitle{font-size:0.7rem;color:var(--text-muted);margin-bottom:0.2rem;}
-.comm-card .cname{font-size:0.92rem;font-weight:600;color:var(--primary-dark);}
-.comm-card .ctag{font-size:0.68rem;color:var(--accent);margin-top:0.1rem;}
+.comm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;}
+.comm-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;}
+.comm-card .ctitle{font-size:0.82rem;color:var(--text-muted);margin-bottom:0.25rem;font-weight:500;}
+.comm-card .cname{font-size:1.05rem;font-weight:700;color:var(--primary-dark);}
+.comm-card .ctag{font-size:0.8rem;color:var(--accent);margin-top:0.2rem;font-weight:500;}
 
 /* NOTICE */
-.notice-list{}
-.notice-item{display:flex;align-items:center;gap:0.7rem;padding:0.85rem 0;border-bottom:0.5px solid var(--border);cursor:pointer;}
-.nbadge{background:var(--primary);color:#fff;font-size:0.68rem;padding:2px 6px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
-.ntitle{flex:1;font-size:0.88rem;line-height:1.4;}
-.ndate{font-size:0.75rem;color:var(--text-muted);flex-shrink:0;}
+.notice-item{display:flex;align-items:center;gap:0.8rem;padding:1rem 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.nbadge{background:var(--primary);color:#fff;font-size:0.8rem;padding:4px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0;font-weight:700;}
+.ntitle{flex:1;font-size:1rem;line-height:1.5;font-weight:500;}
+.ndate{font-size:0.85rem;color:var(--text-muted);flex-shrink:0;font-weight:500;}
 
 /* YOUTUBE */
-.yt-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:0.8rem;cursor:pointer;}
-.yt-thumb{background:var(--primary-dark);height:120px;display:flex;align-items:center;justify-content:center;}
-.yt-play-btn{width:46px;height:46px;background:#FF0000;border-radius:50%;display:flex;align-items:center;justify-content:center;}
-.yt-play-btn::after{content:'';width:0;height:0;border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:4px;}
-.yt-body{padding:0.8rem 1rem;}
-.yt-body h4{font-size:0.88rem;font-weight:600;margin-bottom:0.2rem;}
-.yt-body p{font-size:0.75rem;color:var(--text-muted);}
-.yt-btn{display:block;text-align:center;background:var(--primary);color:#fff;text-decoration:none;padding:0.75rem;border-radius:var(--radius);font-size:0.88rem;margin-top:1rem;}
+.yt-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem;cursor:pointer;}
+.yt-thumb{background:var(--primary-dark);height:130px;display:flex;align-items:center;justify-content:center;}
+.yt-play-btn{width:56px;height:56px;background:#FF0000;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.yt-play-btn::after{content:'';width:0;height:0;border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent;margin-left:5px;}
+.yt-body{padding:1rem 1.1rem;}
+.yt-body h4{font-size:1rem;font-weight:700;margin-bottom:0.3rem;}
+.yt-body p{font-size:0.88rem;color:var(--text-muted);font-weight:500;}
+.yt-btn{display:block;text-align:center;background:var(--primary);color:#fff;text-decoration:none;padding:1rem;border-radius:var(--radius);font-size:1rem;font-weight:700;margin-top:1rem;}
 
 /* MAP */
-.map-img{width:100%;border-radius:var(--radius);border:0.5px solid var(--border);display:block;margin-bottom:1rem;}
-.address-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.2rem;}
-.addr-row{display:flex;gap:0.8rem;align-items:flex-start;padding:0.45rem 0;border-bottom:0.5px solid var(--border);}
+.map-img{width:100%;border-radius:var(--radius);border:1px solid var(--border);display:block;margin-bottom:1rem;}
+.address-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.3rem;}
+.addr-row{display:flex;gap:0.9rem;align-items:flex-start;padding:0.7rem 0;border-bottom:1px solid var(--border);}
 .addr-row:last-child{border-bottom:none;}
-.addr-key{font-size:0.75rem;color:var(--text-muted);min-width:44px;padding-top:2px;flex-shrink:0;}
-.addr-val{font-size:0.85rem;line-height:1.6;}
-.addr-val a{color:var(--primary);text-decoration:none;}
+.addr-key{font-size:0.88rem;color:var(--text-muted);min-width:48px;padding-top:2px;flex-shrink:0;font-weight:700;}
+.addr-val{font-size:1rem;line-height:1.7;font-weight:500;}
+.addr-val a{color:var(--primary);text-decoration:none;font-weight:700;}
 
 /* OFFERING */
-.offering-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.8rem 1.5rem;text-align:center;}
-.off-icon{font-size:2.2rem;display:block;margin-bottom:0.8rem;}
-.off-bank{background:var(--primary-light);border-radius:8px;padding:1.1rem 1.3rem;margin:1rem 0;}
-.off-bank .bank-name{font-size:0.75rem;color:var(--text-muted);margin-bottom:0.3rem;}
-.off-bank .account{font-size:1.1rem;font-weight:600;color:var(--primary-dark);letter-spacing:1px;}
-.off-bank .church-name{font-size:0.82rem;color:var(--primary);font-weight:500;margin-top:0.3rem;}
-.off-note{font-size:0.8rem;color:var(--text-muted);line-height:1.9;}
+.offering-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;}
+.off-icon{font-size:2.5rem;display:block;margin-bottom:0.9rem;}
+.off-bank{background:var(--primary-light);border-radius:10px;padding:1.3rem 1.5rem;margin:1.1rem 0;}
+.off-bank .bank-name{font-size:0.9rem;color:var(--text-muted);margin-bottom:0.4rem;font-weight:700;}
+.off-bank .account{font-size:1.3rem;font-weight:700;color:var(--primary-dark);letter-spacing:1px;}
+.off-bank .church-name{font-size:1rem;color:var(--primary);font-weight:700;margin-top:0.4rem;}
+.off-note{font-size:0.95rem;color:var(--text-muted);line-height:2;font-weight:500;}
 
 /* FOOTER */
-footer{background:var(--primary-dark);color:rgba(255,255,255,0.6);text-align:center;padding:2rem 1rem;font-size:0.78rem;line-height:2;}
-footer strong{color:#fff;display:block;font-family:'Noto Serif KR',serif;font-size:0.9rem;margin-bottom:0.3rem;}
+footer{background:var(--primary-dark);color:rgba(255,255,255,0.65);text-align:center;padding:2rem 1rem;font-size:0.9rem;line-height:2.2;}
+footer strong{color:#fff;display:block;font-family:'Noto Serif KR',serif;font-size:1.05rem;margin-bottom:0.3rem;}
 footer .gold{color:var(--gold);}
 
-/* BOTTOM NAV (mobile) */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--primary-dark);display:flex;z-index:200;border-top:0.5px solid rgba(255,255,255,0.1);}
-.bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.5rem 0.2rem;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.58rem;gap:3px;cursor:pointer;}
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--primary-dark);display:flex;z-index:200;border-top:1px solid rgba(255,255,255,0.1);}
+.bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.6rem 0.2rem;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.68rem;font-weight:700;gap:3px;cursor:pointer;}
 .bottom-nav a.active{color:var(--gold);}
-.bottom-nav a .bicon{font-size:1.1rem;}
-body{padding-bottom:60px;}
+.bottom-nav a .bicon{font-size:1.3rem;}
+body{padding-bottom:68px;}
 </style>
 </head>
 <body>
@@ -217,9 +216,9 @@ body{padding-bottom:60px;}
   <div class="sub-hero"><h2>교회 소개</h2><p>ABOUT US</p></div>
   <section>
     <div class="section-head"><h2>성현교회를 소개합니다</h2><div class="bar"></div><p>1980년에 설립된 성현교회입니다</p></div>
-    <div style="text-align:center;color:var(--text-muted);font-size:0.9rem;line-height:2;margin-bottom:2rem;">
+    <div style="text-align:center;color:var(--text-muted);font-size:1rem;line-height:2.1;margin-bottom:2rem;font-weight:500;">
       <p>성현교회는 하나님의 말씀 위에 세워진 공동체로,<br>예배와 기도, 섬김과 나눔을 통해<br>함께 성장해 나가고 있습니다.<br><br>
-      <em style="color:var(--primary);font-style:normal;font-weight:500;">"항상 기뻐하라, 쉬지 말고 기도하라,<br>범사에 감사하라"</em><br>살로니가전서 5:16~18</p>
+      <em style="color:var(--primary);font-style:normal;font-weight:700;">"항상 기뻐하라, 쉬지 말고 기도하라,<br>범사에 감사하라"</em><br>살로니가전서 5:16~18</p>
     </div>
     <div class="quick-grid">
       <div class="quick-card"><span class="icon">📜</span><h3>설립연도</h3><p>1980년</p></div>
@@ -290,7 +289,7 @@ body{padding-bottom:60px;}
       <div class="wrow"><div class="wcell">주일 3부 예배</div><div class="wcell">주일 오후 2:00</div><div class="wcell">본당</div></div>
       <div class="wrow"><div class="wcell">수요 예배</div><div class="wcell">수요일 저녁 7:30</div><div class="wcell">본당</div></div>
       <div class="wrow"><div class="wcell">금요 기도회</div><div class="wcell">금요일 저녁 8:30</div><div class="wcell">본당</div></div>
-      <div class="wrow"><div class="wcell">매일 새벽기도회</div><div class="wcell">월~토 오전 5:30</div><div class="wcell">소예배실(지하1층)</div></div>
+      <div class="wrow"><div class="wcell">매일 새벽기도회</div><div class="wcell">월~토 오전 5:30</div><div class="wcell">소예배실 (지하1층)</div></div>
     </div>
   </section>
   <section class="alt">
@@ -351,7 +350,7 @@ body{padding-bottom:60px;}
       <div class="notice-item"><span class="nbadge">주보</span><span class="ntitle">2026년 4월 26일 주보</span><span class="ndate">04.26</span></div>
       <div class="notice-item"><span class="nbadge">주보</span><span class="ntitle">2026년 4월 19일 주보</span><span class="ndate">04.19</span></div>
     </div>
-    <p style="text-align:center;margin-top:1.5rem;font-size:0.78rem;color:var(--text-muted);">※ 매주 주보를 업로드하여 업데이트하세요</p>
+    <p style="text-align:center;margin-top:1.5rem;font-size:0.9rem;color:var(--text-muted);font-weight:500;">※ 매주 주보를 업로드하여 업데이트하세요</p>
   </section>
 </div>
 
@@ -376,8 +375,8 @@ body{padding-bottom:60px;}
   <section>
     <div class="offering-card">
       <span class="off-icon">🙏</span>
-      <h2 style="font-family:'Noto Serif KR',serif;font-size:1.1rem;color:var(--primary-dark);margin-bottom:0.4rem;">온라인 헌금 안내</h2>
-      <p style="font-size:0.82rem;color:var(--text-muted);">아래 계좌로 헌금을 보내주시면 됩니다</p>
+      <h2 style="font-family:'Noto Serif KR',serif;font-size:1.3rem;color:var(--primary-dark);margin-bottom:0.5rem;font-weight:700;">온라인 헌금 안내</h2>
+      <p style="font-size:0.95rem;color:var(--text-muted);font-weight:500;">아래 계좌로 헌금을 보내주시면 됩니다</p>
       <div class="off-bank">
         <div class="bank-name">새마을금고</div>
         <div class="account">9002-1981-2476-7</div>
@@ -385,7 +384,7 @@ body{padding-bottom:60px;}
       </div>
       <p class="off-note">헌금은 하나님께 드리는 예배의 한 부분입니다.<br>감사한 마음으로 드려주시기 바랍니다.<br><br>
       십일조, 감사헌금, 선교헌금 등<br>이체 시 메모란에 헌금 종류를 기재해 주세요.<br><br>
-      문의: <a href="tel:02-593-3909" style="color:var(--primary);">02-593-3909</a></p>
+      문의: <a href="tel:02-593-3909" style="color:var(--primary);font-weight:700;">02-593-3909</a></p>
     </div>
   </section>
 </div>
@@ -398,7 +397,6 @@ body{padding-bottom:60px;}
   © 2026 성현교회. All rights reserved.
 </footer>
 
-<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <a onclick="showPage('home')" id="b-home" class="active"><span class="bicon">🏠</span>홈</a>
   <a onclick="showPage('worship')" id="b-worship"><span class="bicon">🕊</span>예배</a>
