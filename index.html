@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>성현교회 SUNGHYUN CHURCH</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
+.accordion-list { }
+.acc-item { border-bottom: 1px solid var(--border); }
+.acc-title { display:flex; align-items:center; gap:0.8rem; padding:1rem 0; cursor:pointer; }
+.acc-arrow { margin-left:auto; font-size:0.8rem; color:var(--text-muted); transition:transform 0.3s; }
+.acc-title.open .acc-arrow { transform:rotate(180deg); }
+.acc-body { display:none; padding:0.8rem 1rem 1.2rem; background:var(--primary-light); border-radius:8px; margin-bottom:0.8rem; font-size:0.95rem; color:var(--text-muted); line-height:1.9; font-weight:500; }
+.acc-body.open { display:block; }
+  <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
   --primary:#1a56a0;
@@ -308,34 +315,69 @@ body{padding-bottom:68px;}
 <div id="notice" class="page">
   <div class="sub-hero"><h2>공지사항</h2><p>NOTICE</p></div>
   <section>
-    <div class="notice-list">
-      <div class="notice-item"><span class="nbadge">공지</span><span class="ntitle">2026년 5월 셋째주 공지사항</span><span class="ndate">2026.05.17</span></div>
-      <div class="notice-item"><span class="nbadge">공지</span><span class="ntitle">구역모임 일정 안내</span><span class="ndate">2026.05.10</span></div>
-      <div class="notice-item"><span class="nbadge">공지</span><span class="ntitle">2026년 교회 봉사자 모집</span><span class="ndate">2026.05.03</span></div>
-      <div class="notice-item"><span class="nbadge">공지</span><span class="ntitle">5월 특별 새벽기도회 안내</span><span class="ndate">2026.05.01</span></div>
-      <div class="notice-item"><span class="nbadge">공지</span><span class="ntitle">헌금 계좌 안내</span><span class="ndate">2026.04.20</span></div>
-    </div>
-  </section>
-</div>
+    <div class="accordion-list">
 
-<!-- SERMON -->
-<div id="sermon" class="page">
-  <div class="sub-hero"><h2>설교 영상</h2><p>SERMON VIDEO</p></div>
-  <section>
-    <div class="section-head"><h2>최근 설교 영상</h2><div class="bar"></div><p>성현교회 유튜브 채널</p></div>
-    <div class="yt-card" onclick="window.open('https://www.youtube.com/@SungHyunChurch-l7m','_blank')">
-      <div class="yt-thumb"><div class="yt-play-btn"></div></div>
-      <div class="yt-body"><h4>주일 설교 영상</h4><p>유튜브 채널에서 시청</p></div>
+      <div class="acc-item">
+        <div class="acc-title" onclick="toggleAcc(this)">
+          <span class="nbadge">공지</span>
+          <span class="ntitle">2026년 5월 셋째주 공지사항</span>
+          <span class="ndate">2026.05.17</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <p>세부 내용을 여기에 입력하세요.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-title" onclick="toggleAcc(this)">
+          <span class="nbadge">공지</span>
+          <span class="ntitle">구역모임 일정 안내</span>
+          <span class="ndate">2026.05.10</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <p>세부 내용을 여기에 입력하세요.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-title" onclick="toggleAcc(this)">
+          <span class="nbadge">공지</span>
+          <span class="ntitle">2026년 교회 봉사자 모집</span>
+          <span class="ndate">2026.05.03</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <p>세부 내용을 여기에 입력하세요.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-title" onclick="toggleAcc(this)">
+          <span class="nbadge">공지</span>
+          <span class="ntitle">5월 특별 새벽기도회 안내</span>
+          <span class="ndate">2026.05.01</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <p>세부 내용을 여기에 입력하세요.</p>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-title" onclick="toggleAcc(this)">
+          <span class="nbadge">공지</span>
+          <span class="ntitle">헌금 계좌 안내</span>
+          <span class="ndate">2026.04.20</span>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="acc-body">
+          <p>새마을금고 9002-1981-2476-7 (성현교회)</p>
+        </div>
+      </div>
+
     </div>
-    <div class="yt-card" onclick="window.open('https://www.youtube.com/@SungHyunChurch-l7m','_blank')">
-      <div class="yt-thumb"><div class="yt-play-btn"></div></div>
-      <div class="yt-body"><h4>수요 설교 영상</h4><p>유튜브 채널에서 시청</p></div>
-    </div>
-    <div class="yt-card" onclick="window.open('https://www.youtube.com/@SungHyunChurch-l7m','_blank')">
-      <div class="yt-thumb"><div class="yt-play-btn"></div></div>
-      <div class="yt-body"><h4>금요 기도회 영상</h4><p>유튜브 채널에서 시청</p></div>
-    </div>
-    <a href="https://www.youtube.com/@SungHyunChurch-l7m" target="_blank" class="yt-btn">▶ 유튜브 채널 바로가기</a>
   </section>
 </div>
 
@@ -421,6 +463,11 @@ function showPage(id){
 function toggleMenu(){
   document.getElementById('mobileMenu').classList.toggle('open');
   document.getElementById('hamburger').classList.toggle('open');
+}
+  function toggleAcc(el) {
+  el.classList.toggle('open');
+  const body = el.nextElementSibling;
+  body.classList.toggle('open');
 }
 </script>
 </body>
