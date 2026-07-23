@@ -536,5 +536,14 @@ function toggleMenu(){
   body.classList.toggle('open');
 }
 </script>
+<!-- 여름수련회 팝업 배너 -->
+<div id="retreatPopup" style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:300;width:90%;max-width:400px;background:linear-gradient(135deg,#0d3572,#1a56a0);border-radius:16px;padding:1.2rem 1.5rem;box-shadow:0 8px 30px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+  <div onclick="window.open('summer_retreat.html','_blank')" style="flex:1;cursor:pointer;">
+    <div style="color:#c9a84c;font-size:0.75rem;font-weight:700;letter-spacing:1px;margin-bottom:0.3rem;">✝ 2026 여름수련회</div>
+    <div style="color:#fff;font-size:1rem;font-weight:700;margin-bottom:0.2rem;">항상 기뻐하라 🎉</div>
+    <div style="color:rgba(255,255,255,0.8);font-size:0.82rem;">8월 28일~30일 · 자세히 보기 ▶</div>
+  </div>
+  <button onclick="document.getElementById('retreatPopup').style.display='none'" style="background:rgba(255,255,255,0.15);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">✕</button>
+</div>
 </body>
 </html>
