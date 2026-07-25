@@ -8,117 +8,165 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --primary:#1a56a0;
-  --primary-dark:#0d3572;
-  --primary-light:#e8f0fb;
+  --green:#1a7a4a;
+  --green-dark:#0d5c34;
+  --green-light:#e8f7ef;
+  --mint:#2bbf7e;
   --gold:#c9a84c;
-  --text:#111;
-  --text-muted:#555;
+  --yellow:#ffe066;
+  --text:#1a2a1a;
+  --text-muted:#4a6a4a;
   --bg:#fff;
-  --bg-alt:#f4f7fc;
-  --border:rgba(0,0,0,0.1);
+  --bg-alt:#f0faf5;
+  --border:rgba(0,100,50,0.12);
   --radius:14px;
 }
 body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg);line-height:1.8;font-size:17px;}
 
-.hero{background:var(--primary-dark);color:#fff;text-align:center;padding:3rem 1.5rem 2.5rem;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background:rgba(0,30,80,0.55);}
-.hero-inner{position:relative;z-index:1;}
-.hero-badge{display:inline-block;background:var(--gold);color:#fff;font-size:0.85rem;font-weight:700;padding:0.3rem 1rem;border-radius:20px;margin-bottom:1rem;letter-spacing:1px;}
-.hero h1{font-family:'Noto Serif KR',serif;font-size:1.9rem;font-weight:700;margin-bottom:0.5rem;line-height:1.4;}
-.hero h1 span{color:var(--gold);}
-.hero-date{font-size:1.05rem;color:rgba(255,255,255,0.9);font-weight:500;margin-top:0.8rem;}
-.hero-verse{margin-top:1.2rem;background:rgba(255,255,255,0.08);border:1px solid rgba(201,168,76,0.4);border-radius:10px;padding:0.9rem 1.3rem;font-size:0.95rem;color:rgba(255,255,255,0.95);line-height:1.9;}
-.hero-verse em{color:var(--gold);font-style:normal;font-weight:700;}
+.hero-banner{width:100%;display:block;}
+.hero-overlay{background:linear-gradient(135deg,#0d5c34 0%,#1a7a4a 50%,#2bbf7e 100%);color:#fff;padding:2rem 1.5rem 2rem;position:relative;overflow:hidden;text-align:center;}
+.hero-overlay::before{content:'🌿';position:absolute;top:-10px;left:-10px;font-size:5rem;opacity:0.15;}
+.hero-overlay::after{content:'🌿';position:absolute;bottom:-10px;right:-10px;font-size:5rem;opacity:0.15;transform:scaleX(-1);}
+.hero-badge{display:inline-block;background:var(--yellow);color:var(--green-dark);font-size:0.82rem;font-weight:700;padding:0.3rem 1rem;border-radius:20px;margin-bottom:0.8rem;letter-spacing:1px;}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:1.9rem;font-weight:700;margin-bottom:0.4rem;line-height:1.4;}
+.hero h1 span{color:var(--yellow);}
+.hero-date{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:0.5rem 1.2rem;font-size:1rem;font-weight:700;color:#fff;margin-top:0.5rem;}
+.hero-verse{margin-top:1.2rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:10px;padding:0.9rem 1.2rem;font-size:0.92rem;color:rgba(255,255,255,0.95);line-height:1.9;}
+.hero-verse em{color:var(--yellow);font-style:normal;font-weight:700;}
 
 section{padding:2.5rem 1.3rem;}
 section.alt{background:var(--bg-alt);}
 .section-head{text-align:center;margin-bottom:1.8rem;}
-.section-head h2{font-family:'Noto Serif KR',serif;font-size:1.4rem;font-weight:700;color:var(--primary-dark);margin-bottom:0.4rem;}
-.section-head .bar{width:36px;height:3px;background:var(--gold);margin:0.6rem auto;border-radius:2px;}
+.section-head h2{font-family:'Noto Serif KR',serif;font-size:1.4rem;font-weight:700;color:var(--green-dark);margin-bottom:0.4rem;}
+.section-head .bar{width:36px;height:3px;background:var(--mint);margin:0.6rem auto;border-radius:2px;}
 .section-head p{color:var(--text-muted);font-size:0.9rem;}
 
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.9rem;max-width:600px;margin:0 auto;}
-.info-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem 1rem;text-align:center;}
+.info-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem 1rem;text-align:center;box-shadow:0 2px 8px rgba(0,100,50,0.07);}
 .info-card .icon{font-size:1.8rem;margin-bottom:0.5rem;display:block;}
-.info-card h3{font-size:0.9rem;font-weight:700;color:var(--primary);margin-bottom:0.3rem;}
+.info-card h3{font-size:0.9rem;font-weight:700;color:var(--green);margin-bottom:0.3rem;}
 .info-card p{font-size:0.88rem;color:var(--text-muted);line-height:1.7;font-weight:500;}
 
-/* DAY TABS */
 .day-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;justify-content:center;}
-.day-tab{flex:1;max-width:120px;padding:0.7rem 0.5rem;background:var(--bg);border:2px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;font-size:0.85rem;font-weight:700;color:var(--text-muted);transition:all 0.2s;}
-.day-tab.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+.day-tab{flex:1;max-width:120px;padding:0.75rem 0.5rem;background:var(--bg);border:2px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;font-size:0.85rem;font-weight:700;color:var(--text-muted);transition:all 0.2s;}
+.day-tab.active{background:var(--green);border-color:var(--green);color:#fff;}
 
 .schedule{display:none;}
 .schedule.active{display:block;}
 
-/* SCHEDULE ITEM */
 .schedule-item{padding:1rem 0;border-bottom:1px solid var(--border);}
-.s-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;}
-.s-time{font-size:0.8rem;color:#fff;background:var(--primary);padding:3px 8px;border-radius:6px;font-weight:700;white-space:nowrap;flex-shrink:0;}
-.s-program{font-size:1rem;font-weight:700;color:var(--primary-dark);}
-.s-program.highlight{color:var(--gold);}
-.s-detail{font-size:0.92rem;color:var(--text-muted);line-height:1.8;font-weight:500;padding-left:0.3rem;}
-.s-detail.red{color:#c0392b;font-weight:600;}
-.s-detail-box{background:var(--primary-light);border-radius:8px;padding:0.7rem 1rem;margin-top:0.5rem;font-size:0.88rem;color:var(--text-muted);line-height:1.8;}
-.s-detail-box.red{background:#fef0f0;color:#c0392b;font-weight:600;}
-.s-note{display:inline-block;font-size:0.78rem;color:var(--primary);font-weight:700;margin-top:0.3rem;background:var(--primary-light);padding:2px 8px;border-radius:6px;}
+.s-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap;}
+.s-time{font-size:0.8rem;color:#fff;background:var(--green);padding:3px 9px;border-radius:6px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.s-program{font-size:1rem;font-weight:700;color:var(--green-dark);}
+.s-program.highlight{color:var(--mint);}
+.s-detail{font-size:0.92rem;color:var(--text-muted);line-height:1.8;font-weight:500;padding-left:0.2rem;}
+.s-detail-box{background:var(--green-light);border-radius:8px;padding:0.8rem 1rem;margin-top:0.5rem;font-size:0.9rem;color:var(--green-dark);line-height:1.9;font-weight:600;border-left:3px solid var(--mint);}
+.s-note{display:inline-block;font-size:0.78rem;color:var(--green);font-weight:700;margin-top:0.3rem;background:var(--green-light);padding:2px 8px;border-radius:6px;}
 
-.prep-box{background:var(--primary-light);border-radius:var(--radius);padding:1.5rem;border-left:4px solid var(--primary);}
-.prep-box h3{font-size:1rem;font-weight:700;color:var(--primary-dark);margin-bottom:0.8rem;}
+.prep-box{background:var(--green-light);border-radius:var(--radius);padding:1.5rem;border-left:4px solid var(--mint);}
+.prep-box h3{font-size:1rem;font-weight:700;color:var(--green-dark);margin-bottom:0.8rem;}
 .prep-item{display:flex;align-items:flex-start;gap:0.7rem;margin-bottom:0.7rem;font-size:0.95rem;color:var(--text);font-weight:500;}
 .prep-item .pi{font-size:1rem;flex-shrink:0;}
 
-.contact-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;}
-.contact-card .c-icon{font-size:2rem;margin-bottom:0.7rem;display:block;}
-.contact-card h3{font-size:1rem;font-weight:700;color:var(--primary-dark);margin-bottom:0.3rem;}
-.contact-card .c-name{font-size:1.1rem;font-weight:700;color:var(--primary);margin-bottom:0.5rem;}
-.contact-card a{display:block;background:var(--primary);color:#fff;text-decoration:none;padding:0.9rem;border-radius:10px;font-size:1rem;font-weight:700;margin-top:0.8rem;}
-
-.cta-box{background:var(--primary-dark);color:#fff;text-align:center;padding:2rem 1.5rem;border-radius:var(--radius);margin:0 1.3rem;}
+.cta-box{background:linear-gradient(135deg,#0d5c34,#1a7a4a);color:#fff;text-align:center;padding:2rem 1.5rem;border-radius:var(--radius);margin:0 1.3rem;}
 .cta-box h2{font-family:'Noto Serif KR',serif;font-size:1.3rem;font-weight:700;margin-bottom:0.5rem;}
-.cta-box p{font-size:0.92rem;color:rgba(255,255,255,0.8);margin-bottom:1.2rem;line-height:1.8;}
-.cta-btn{display:inline-block;background:var(--gold);color:#fff;text-decoration:none;padding:0.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:700;}
+.cta-box p{font-size:0.92rem;color:rgba(255,255,255,0.85);margin-bottom:1.2rem;line-height:1.8;}
+.cta-btn{display:inline-block;background:var(--yellow);color:var(--green-dark);text-decoration:none;padding:0.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:700;}
 
-footer{background:var(--primary-dark);color:rgba(255,255,255,0.6);text-align:center;padding:1.5rem 1rem;font-size:0.82rem;line-height:2;margin-top:2rem;}
+.contact-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;box-shadow:0 2px 8px rgba(0,100,50,0.07);}
+.contact-card .c-icon{font-size:2rem;margin-bottom:0.7rem;display:block;}
+.contact-card h3{font-size:1rem;font-weight:700;color:var(--green-dark);margin-bottom:0.3rem;}
+.contact-card .c-name{font-size:1.1rem;font-weight:700;color:var(--green);margin-bottom:0.5rem;}
+.contact-card a{display:block;background:var(--green);color:#fff;text-decoration:none;padding:0.9rem;border-radius:10px;font-size:1rem;font-weight:700;margin-top:0.8rem;}
+
+footer{background:var(--green-dark);color:rgba(255,255,255,0.6);text-align:center;padding:1.5rem 1rem;font-size:0.82rem;line-height:2;margin-top:2rem;}
 footer strong{color:#fff;}
-footer a{color:var(--gold);text-decoration:none;}
+footer a{color:var(--yellow);text-decoration:none;}
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="hero-inner">
-    <span class="hero-badge">✝ 2026 여름수련회</span>
-    <h1>성현교회 여름수련회<br><span>"항상 기뻐하라"</span></h1>
-    <p class="hero-date">📅 2026년 8월 28(금) ~ 30(주일) | 성현교회</p>
-    <div class="hero-verse">
-      <em>"항상 기뻐하라, 쉬지 말고 기도하라, 범사에 감사하라"</em><br>
-      데살로니가전서 5:16~18
-    </div>
+<!-- HERO BANNER SVG -->
+<svg width="100%" viewBox="0 0 680 220" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>성현교회 2026 여름수련회 현수막</title>
+<desc>초록 배경의 여름수련회 현수막 디자인</desc>
+<rect width="680" height="220" fill="#0e6b3f"/>
+<rect x="0" y="100" width="680" height="120" fill="#1a8a52"/>
+<rect x="0" y="175" width="680" height="45" fill="#2db870"/>
+<rect x="0" y="185" width="680" height="35" fill="#25a060"/>
+<circle cx="580" cy="60" r="45" fill="#fff176" opacity="0.18"/>
+<circle cx="580" cy="60" r="30" fill="#fff176" opacity="0.22"/>
+<circle cx="580" cy="60" r="18" fill="#ffe066" opacity="0.5"/>
+<ellipse cx="30" cy="40" rx="38" ry="22" fill="#1a9e55" transform="rotate(-30,30,40)"/>
+<ellipse cx="15" cy="65" rx="30" ry="16" fill="#22b562" transform="rotate(-50,15,65)"/>
+<ellipse cx="55" cy="20" rx="28" ry="14" fill="#25c46a" transform="rotate(-10,55,20)"/>
+<ellipse cx="0" cy="90" rx="34" ry="14" fill="#1a9e55" transform="rotate(-60,0,90)"/>
+<ellipse cx="650" cy="30" rx="38" ry="20" fill="#1a9e55" transform="rotate(25,650,30)"/>
+<ellipse cx="670" cy="60" rx="30" ry="15" fill="#22b562" transform="rotate(50,670,60)"/>
+<ellipse cx="625" cy="15" rx="28" ry="13" fill="#25c46a" transform="rotate(10,625,15)"/>
+<rect x="118" y="70" width="6" height="110" fill="#5d3a1a"/>
+<rect x="70" y="72" width="75" height="28" rx="4" fill="#4a90d9"/>
+<text x="107" y="91" text-anchor="middle" font-family="'Noto Sans KR', sans-serif" font-size="13" font-weight="700" fill="white">2026</text>
+<rect x="60" y="106" width="75" height="28" rx="4" fill="#1a56a0"/>
+<text x="97" y="125" text-anchor="middle" font-family="'Noto Sans KR', sans-serif" font-size="12" font-weight="700" fill="white">살전 5:16</text>
+<ellipse cx="148" cy="182" rx="16" ry="12" fill="#2ecc71"/>
+<ellipse cx="148" cy="176" rx="12" ry="10" fill="#27ae60"/>
+<circle cx="144" cy="173" r="4" fill="#2ecc71"/>
+<circle cx="152" cy="173" r="4" fill="#2ecc71"/>
+<circle cx="143" cy="172" r="2" fill="white"/>
+<circle cx="151" cy="172" r="2" fill="white"/>
+<circle cx="143" cy="172" r="1" fill="#222"/>
+<circle cx="151" cy="172" r="1" fill="#222"/>
+<ellipse cx="530" cy="45" rx="10" ry="6" fill="#ffe066" opacity="0.85" transform="rotate(-30,530,45)"/>
+<ellipse cx="545" cy="42" rx="8" ry="5" fill="#ffd700" opacity="0.85" transform="rotate(20,545,42)"/>
+<line x1="537" y1="44" x2="537" y2="50" stroke="#888" stroke-width="1"/>
+<text x="360" y="55" text-anchor="middle" font-family="'Noto Serif KR', Georgia, serif" font-size="16" font-weight="400" fill="#c8f0d8" opacity="0.9">주님께 the 가까이...</text>
+<text x="390" y="110" text-anchor="middle" font-family="'Noto Sans KR', sans-serif" font-size="52" font-weight="700" fill="#ffe066" letter-spacing="2">여름 수련회</text>
+<text x="390" y="148" text-anchor="middle" font-family="'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="white">8.28(금) - 30(주일)</text>
+<line x1="480" y1="158" x2="480" y2="175" stroke="white" stroke-width="1.5" opacity="0.7"/>
+<rect x="490" y="155" width="110" height="26" rx="4" fill="white"/>
+<text x="545" y="173" text-anchor="middle" font-family="'Noto Sans KR', sans-serif" font-size="14" font-weight="700" fill="#0e6b3f">성현교회</text>
+<ellipse cx="280" cy="38" rx="28" ry="14" fill="white" opacity="0.15"/>
+<ellipse cx="300" cy="33" rx="20" ry="12" fill="white" opacity="0.12"/>
+<ellipse cx="260" cy="35" rx="18" ry="10" fill="white" opacity="0.12"/>
+<ellipse cx="470" cy="28" rx="22" ry="11" fill="white" opacity="0.12"/>
+<ellipse cx="488" cy="24" rx="16" ry="9" fill="white" opacity="0.1"/>
+<ellipse cx="200" cy="200" rx="120" ry="40" fill="#1db86a" opacity="0.5"/>
+<ellipse cx="500" cy="205" rx="100" ry="35" fill="#1db86a" opacity="0.4"/>
+</svg>
+
+<!-- HERO OVERLAY -->
+<div class="hero-overlay">
+  <span class="hero-badge">✝ 성현교회 2026 여름수련회</span>
+  <h1 style="font-family:'Noto Serif KR',serif;font-size:1.9rem;font-weight:700;margin-bottom:0.4rem;">"항상 <span style="color:#ffe066;">기뻐하라</span>"</h1>
+  <p style="font-size:0.95rem;color:rgba(255,255,255,0.85);font-weight:500;">데살로니가전서 5:16~18</p>
+  <div class="hero-date">📅 2026년 8월 28일(금) ~ 30일(주일) | 성현교회</div>
+  <div class="hero-verse">
+    <em>"항상 기뻐하라, 쉬지 말고 기도하라, 범사에 감사하라"</em><br>
+    데살로니가전서 5:16~18
   </div>
 </div>
 
+<!-- 안내 -->
 <section>
-  <div class="section-head"><h2>수련회 안내</h2><div class="bar"></div></div>
+  <div class="section-head"><h2>🌿 수련회 안내</h2><div class="bar"></div></div>
   <div class="info-grid">
-    <div class="info-card"><span class="icon">📅</span><h3>일정</h3><p>2026년 8월 28(금)<br>~ 30(주일)</p></div>
+    <div class="info-card"><span class="icon">📅</span><h3>일정</h3><p>2026년 8월 28일(금)<br>~ 30일(주일)</p></div>
     <div class="info-card"><span class="icon">📍</span><h3>장소</h3><p>성현교회</p></div>
-    <div class="info-card"><span class="icon">👥</span><h3>참가 대상</h3><p>성현교회 전교인<br>및 가족, 전도 초청 대상</p></div>
+    <div class="info-card"><span class="icon">👥</span><h3>참가 대상</h3><p>성현교회 전교인<br>및 가족 전도 초청</p></div>
     <div class="info-card"><span class="icon">🎯</span><h3>운영</h3><p>각 구역장 및<br>목회자·운영위</p></div>
   </div>
 </section>
 
+<!-- 일정표 -->
 <section class="alt">
-  <div class="section-head"><h2>수련회 일정표</h2><div class="bar"></div></div>
-
+  <div class="section-head"><h2>🗓 수련회 일정표</h2><div class="bar"></div></div>
   <div class="day-tabs">
     <div class="day-tab active" onclick="showDay(1)">DAY 1<br>8/28(금)</div>
     <div class="day-tab" onclick="showDay(2)">DAY 2<br>8/29(토)</div>
     <div class="day-tab" onclick="showDay(3)">DAY 3<br>8/30(주일)</div>
   </div>
 
-  <!-- DAY 1 -->
   <div class="schedule active" id="day1">
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">17:00~19:00</span><span class="s-program">🍽 저녁 식사</span></div>
@@ -126,17 +174,17 @@ footer a{color:var(--gold);text-decoration:none;}
       <span class="s-note">담당: 여전도회</span>
     </div>
     <div class="schedule-item">
-      <div class="s-header"><span class="s-time">20:00~20:10</span><span class="s-program">개회 및 환영</span></div>
+      <div class="s-header"><span class="s-time">19:30~19:40</span><span class="s-program">개회 및 환영</span></div>
       <div class="s-detail">개회기도 / 환영인사</div>
       <span class="s-note">이장형 목사</span>
     </div>
     <div class="schedule-item">
-      <div class="s-header"><span class="s-time">20:10~21:30</span><span class="s-program highlight">🎵 금요 찬양집회</span></div>
+      <div class="s-header"><span class="s-time">19:40~21:00</span><span class="s-program highlight">🎵 금요 찬양집회</span></div>
       <div class="s-detail">찬양팀 인도 / 찬양과 경배 / 간증 / 합심기도</div>
       <span class="s-note">이상구 목사 (벧엘교회)</span>
     </div>
     <div class="schedule-item">
-      <div class="s-header"><span class="s-time">21:30~22:00</span><span class="s-program">감사 / 간증</span></div>
+      <div class="s-header"><span class="s-time">21:00~21:30</span><span class="s-program">감사 / 간증</span></div>
       <div class="s-detail">구역 은혜 나눔(다함께) / 기도제목 나누기</div>
     </div>
     <div class="schedule-item">
@@ -145,14 +193,10 @@ footer a{color:var(--gold);text-decoration:none;}
     </div>
   </div>
 
-  <!-- DAY 2 -->
   <div class="schedule" id="day2">
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">10:00~12:30</span><span class="s-program">📖 성경통독 / 필사 (1부)</span></div>
-      <div class="s-detail-box red">
-        시편·잠언 등 전체 통독 (약 2시간)<br>
-        필사반 신청시 노트 및 필기구 제공 (사전 신청)
-      </div>
+      <div class="s-detail-box">시편·잠언 등 전체 통독 (약 2시간)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
     </div>
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">12:30~14:00</span><span class="s-program">🍽 점심 특식</span></div>
@@ -161,14 +205,11 @@ footer a{color:var(--gold);text-decoration:none;}
     </div>
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">14:00~16:30</span><span class="s-program">📖 성경통독 / 필사 (2부)</span></div>
-      <div class="s-detail-box red">
-        요한복음 전체 통독 (약 2시간)<br>
-        필사반 신청시 노트 및 필기구 제공 (사전 신청)
-      </div>
+      <div class="s-detail-box">요한복음 전체 통독 (약 2시간)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
       <span class="s-note">수료자 시상</span>
     </div>
     <div class="schedule-item">
-      <div class="s-header"><span class="s-time">16:30~17:30</span><span class="s-program">간식 / 휴식</span></div>
+      <div class="s-header"><span class="s-time">16:30~17:30</span><span class="s-program">🍵 간식 / 휴식</span></div>
       <div class="s-detail">다과 및 휴식</div>
     </div>
     <div class="schedule-item">
@@ -186,7 +227,6 @@ footer a{color:var(--gold);text-decoration:none;}
     </div>
   </div>
 
-  <!-- DAY 3 -->
   <div class="schedule" id="day3">
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">주일</span><span class="s-program">주일 1부 예배</span></div>
@@ -203,12 +243,13 @@ footer a{color:var(--gold);text-decoration:none;}
   </div>
 </section>
 
+<!-- 참가 안내 -->
 <section>
-  <div class="section-head"><h2>참가 안내</h2><div class="bar"></div></div>
+  <div class="section-head"><h2>✅ 참가 안내</h2><div class="bar"></div></div>
   <div class="prep-box">
-    <h3>✅ 꼭 확인해 주세요!</h3>
-    <div class="prep-item"><span class="pi">👥</span><span><strong>참가 대상:</strong> 성현교회 전교인 및 가족, 전도초청대상</span></div>
-    <div class="prep-item"><span class="pi">📅</span><span><strong>일정:</strong> 2026년 8월 28(금) ~ 30(주일)</span></div>
+    <h3>꼭 확인해 주세요!</h3>
+    <div class="prep-item"><span class="pi">👥</span><span><strong>참가 대상:</strong> 성현교회 전교인 및 가족 전도 초청 대상</span></div>
+    <div class="prep-item"><span class="pi">📅</span><span><strong>일정:</strong> 2026년 8월 28일(금) ~ 30일(주일)</span></div>
     <div class="prep-item"><span class="pi">📍</span><span><strong>장소:</strong> 성현교회</span></div>
     <div class="prep-item"><span class="pi">🎒</span><span><strong>준비물:</strong> 말씀과 은혜를 사모하는 마음 🙏</span></div>
     <div class="prep-item"><span class="pi">📖</span><span><strong>필사반 신청:</strong> 사전 신청시 노트 및 필기구 제공</span></div>
@@ -216,13 +257,13 @@ footer a{color:var(--gold);text-decoration:none;}
 </section>
 
 <div class="cta-box">
-  <h2>함께 해요! 🎉</h2>
+  <h2>🌿 함께 해요!</h2>
   <p>말씀과 기도, 찬양과 교제로 가득한<br>2026 성현교회 여름수련회에<br>모든 성도님들을 초대합니다!</p>
   <a href="tel:010-3254-7045" class="cta-btn">📞 참가 문의하기</a>
 </div>
 
 <section>
-  <div class="section-head"><h2>문의 및 연락처</h2><div class="bar"></div></div>
+  <div class="section-head"><h2>📞 문의 및 연락처</h2><div class="bar"></div></div>
   <div class="contact-card">
     <span class="c-icon">📞</span>
     <h3>수련회 담당</h3>
