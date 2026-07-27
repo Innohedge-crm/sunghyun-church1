@@ -8,52 +8,34 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --green:#1a7a4a;
-  --green-dark:#0d5c34;
-  --green-light:#e8f7ef;
-  --mint:#2bbf7e;
-  --gold:#c9a84c;
-  --yellow:#ffe066;
-  --text:#1a2a1a;
-  --text-muted:#4a6a4a;
-  --bg:#fff;
-  --bg-alt:#f0faf5;
-  --border:rgba(0,100,50,0.12);
-  --radius:14px;
+  --green:#1a7a4a;--green-dark:#0d5c34;--green-light:#e8f7ef;
+  --mint:#2bbf7e;--gold:#c9a84c;--yellow:#ffe066;
+  --text:#1a2a1a;--text-muted:#4a6a4a;--bg:#fff;--bg-alt:#f0faf5;
+  --border:rgba(0,100,50,0.12);--radius:14px;
 }
 body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg);line-height:1.8;font-size:17px;}
-
-.hero-banner{width:100%;display:block;}
-.hero-overlay{background:linear-gradient(135deg,#0d5c34 0%,#1a7a4a 50%,#2bbf7e 100%);color:#fff;padding:2rem 1.5rem 2rem;position:relative;overflow:hidden;text-align:center;}
+.hero-overlay{background:linear-gradient(135deg,#0d5c34 0%,#1a7a4a 50%,#2bbf7e 100%);color:#fff;padding:2rem 1.5rem;position:relative;overflow:hidden;text-align:center;}
 .hero-overlay::before{content:'🌿';position:absolute;top:-10px;left:-10px;font-size:5rem;opacity:0.15;}
 .hero-overlay::after{content:'🌿';position:absolute;bottom:-10px;right:-10px;font-size:5rem;opacity:0.15;transform:scaleX(-1);}
 .hero-badge{display:inline-block;background:var(--yellow);color:var(--green-dark);font-size:0.82rem;font-weight:700;padding:0.3rem 1rem;border-radius:20px;margin-bottom:0.8rem;letter-spacing:1px;}
-.hero h1{font-family:'Noto Serif KR',serif;font-size:1.9rem;font-weight:700;margin-bottom:0.4rem;line-height:1.4;}
-.hero h1 span{color:var(--yellow);}
 .hero-date{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:0.5rem 1.2rem;font-size:1rem;font-weight:700;color:#fff;margin-top:0.5rem;}
 .hero-verse{margin-top:1.2rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:10px;padding:0.9rem 1.2rem;font-size:0.92rem;color:rgba(255,255,255,0.95);line-height:1.9;}
 .hero-verse em{color:var(--yellow);font-style:normal;font-weight:700;}
-
 section{padding:2.5rem 1.3rem;}
 section.alt{background:var(--bg-alt);}
 .section-head{text-align:center;margin-bottom:1.8rem;}
 .section-head h2{font-family:'Noto Serif KR',serif;font-size:1.4rem;font-weight:700;color:var(--green-dark);margin-bottom:0.4rem;}
 .section-head .bar{width:36px;height:3px;background:var(--mint);margin:0.6rem auto;border-radius:2px;}
-.section-head p{color:var(--text-muted);font-size:0.9rem;}
-
 .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.9rem;max-width:600px;margin:0 auto;}
 .info-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem 1rem;text-align:center;box-shadow:0 2px 8px rgba(0,100,50,0.07);}
 .info-card .icon{font-size:1.8rem;margin-bottom:0.5rem;display:block;}
 .info-card h3{font-size:0.9rem;font-weight:700;color:var(--green);margin-bottom:0.3rem;}
 .info-card p{font-size:0.88rem;color:var(--text-muted);line-height:1.7;font-weight:500;}
-
 .day-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;justify-content:center;}
 .day-tab{flex:1;max-width:120px;padding:0.75rem 0.5rem;background:var(--bg);border:2px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;font-size:0.85rem;font-weight:700;color:var(--text-muted);transition:all 0.2s;}
 .day-tab.active{background:var(--green);border-color:var(--green);color:#fff;}
-
 .schedule{display:none;}
 .schedule.active{display:block;}
-
 .schedule-item{padding:1rem 0;border-bottom:1px solid var(--border);}
 .s-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.4rem;flex-wrap:wrap;}
 .s-time{font-size:0.8rem;color:#fff;background:var(--green);padding:3px 9px;border-radius:6px;font-weight:700;white-space:nowrap;flex-shrink:0;}
@@ -62,38 +44,28 @@ section.alt{background:var(--bg-alt);}
 .s-detail{font-size:0.92rem;color:var(--text-muted);line-height:1.8;font-weight:500;padding-left:0.2rem;}
 .s-detail-box{background:var(--green-light);border-radius:8px;padding:0.8rem 1rem;margin-top:0.5rem;font-size:0.9rem;color:var(--green-dark);line-height:1.9;font-weight:600;border-left:3px solid var(--mint);}
 .s-note{display:inline-block;font-size:0.78rem;color:var(--green);font-weight:700;margin-top:0.3rem;background:var(--green-light);padding:2px 8px;border-radius:6px;}
-
+.acc-toggle{margin-top:0.6rem;font-size:0.85rem;color:var(--green);font-weight:700;cursor:pointer;display:inline-block;background:var(--green-light);padding:4px 12px;border-radius:6px;border:1px solid var(--mint);}
+.acc-detail{display:none;margin-top:0.7rem;background:var(--green-light);border-radius:8px;padding:0.9rem 1.1rem;font-size:0.9rem;color:var(--green-dark);line-height:2;border-left:3px solid var(--mint);}
+.acc-detail p{font-weight:700;margin-bottom:0.4rem;}
+.acc-detail ul{padding-left:1.2rem;}
+.acc-detail li{margin-bottom:0.2rem;font-weight:500;}
+.acc-detail.open{display:block;}
 .prep-box{background:var(--green-light);border-radius:var(--radius);padding:1.5rem;border-left:4px solid var(--mint);}
 .prep-box h3{font-size:1rem;font-weight:700;color:var(--green-dark);margin-bottom:0.8rem;}
 .prep-item{display:flex;align-items:flex-start;gap:0.7rem;margin-bottom:0.7rem;font-size:0.95rem;color:var(--text);font-weight:500;}
 .prep-item .pi{font-size:1rem;flex-shrink:0;}
-
 .cta-box{background:linear-gradient(135deg,#0d5c34,#1a7a4a);color:#fff;text-align:center;padding:2rem 1.5rem;border-radius:var(--radius);margin:0 1.3rem;}
 .cta-box h2{font-family:'Noto Serif KR',serif;font-size:1.3rem;font-weight:700;margin-bottom:0.5rem;}
 .cta-box p{font-size:0.92rem;color:rgba(255,255,255,0.85);margin-bottom:1.2rem;line-height:1.8;}
 .cta-btn{display:inline-block;background:var(--yellow);color:var(--green-dark);text-decoration:none;padding:0.9rem 2rem;border-radius:10px;font-size:1rem;font-weight:700;}
-
 .contact-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;box-shadow:0 2px 8px rgba(0,100,50,0.07);}
 .contact-card .c-icon{font-size:2rem;margin-bottom:0.7rem;display:block;}
 .contact-card h3{font-size:1rem;font-weight:700;color:var(--green-dark);margin-bottom:0.3rem;}
 .contact-card .c-name{font-size:1.1rem;font-weight:700;color:var(--green);margin-bottom:0.5rem;}
 .contact-card a{display:block;background:var(--green);color:#fff;text-decoration:none;padding:0.9rem;border-radius:10px;font-size:1rem;font-weight:700;margin-top:0.8rem;}
-
 footer{background:var(--green-dark);color:rgba(255,255,255,0.6);text-align:center;padding:1.5rem 1rem;font-size:0.82rem;line-height:2;margin-top:2rem;}
 footer strong{color:#fff;}
 footer a{color:var(--yellow);text-decoration:none;}
-.acc-toggle{margin-top:0.6rem;font-size:0.85rem;color:var(--green);font-weight:700;cursor:pointer;display:inline-block;}
-.acc-detail{display:none;margin-top:0.7rem;background:var(--green-light);border-radius:8px;padding:0.9rem 1.1rem;font-size:0.9rem;color:var(--green-dark);line-height:2;border-left:3px solid var(--mint);}
-.acc-detail p{font-weight:700;margin-bottom:0.4rem;}
-.acc-detail ul{padding-left:1.2rem;}
-.acc-detail li{margin-bottom:0.2rem;font-weight:500;}
-.acc-detail.open{display:block;}
-.acc-toggle{margin-top:0.6rem;font-size:0.85rem;color:var(--green);font-weight:700;cursor:pointer;display:inline-block;}
-.acc-detail{display:none;margin-top:0.7rem;background:var(--green-light);border-radius:8px;padding:0.9rem 1.1rem;font-size:0.9rem;color:var(--green-dark);line-height:2;border-left:3px solid var(--mint);}
-.acc-detail p{font-weight:700;margin-bottom:0.4rem;}
-.acc-detail ul{padding-left:1.2rem;}
-.acc-detail li{margin-bottom:0.2rem;font-weight:500;}
-.acc-detail.open{display:block;}
 </style>
 </head>
 <body>
@@ -179,10 +151,11 @@ footer a{color:var(--yellow);text-decoration:none;}
     <div class="day-tab" onclick="showDay(3)">DAY 3<br>8/30(주일)</div>
   </div>
 
+  <!-- DAY 1 -->
   <div class="schedule active" id="day1">
     <div class="schedule-item">
-      <div class="s-header"><span class="s-time">17:00~19:30</span><span class="s-program">🍽 저녁 식사 / Welcome 티타임 </span></div>
-      <div class="s-detail">메뉴 - 여전도회에서 준비한 특식 </div>
+      <div class="s-header"><span class="s-time">17:00~19:30</span><span class="s-program">🍽 저녁 식사 / Welcome 티타임</span></div>
+      <div class="s-detail">메뉴 - 여전도회에서 준비한 특식</div>
       <span class="s-note">담당: 여전도회</span>
     </div>
     <div class="schedule-item">
@@ -206,51 +179,45 @@ footer a{color:var(--yellow);text-decoration:none;}
     </div>
   </div>
 
+  <!-- DAY 2 -->
   <div class="schedule" id="day2">
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">10:00~12:30</span><span class="s-program">📖 성경통독 / 필사 (1부)</span></div>
-      <div class="s-detail-box">시편·잠언 등 전체 통독 (약 2시간)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
+      <div class="s-detail-box">잠언 통독 (약 2시간 10분)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
+      <div class="acc-toggle" onclick="toggleDetail('detail1')">▼ 세부 실행계획 보기</div>
+      <div class="acc-detail" id="detail1">
+        <p>📌 전체개요 설명 — 이장형 목사</p>
+        <ul>
+          <li>30분 — 교독</li>
+          <li>30분 — 유튜브 성경통독</li>
+          <li>10분 — 휴식</li>
+          <li>30분 — 교독</li>
+          <li>30분 — 유튜브 성경통독</li>
+        </ul>
+      </div>
     </div>
-   <div class="schedule-item">
-  <div class="s-header"><span class="s-time">10:00~12:30</span><span class="s-program">📖 성경통독 / 필사 (1부)</span></div>
-  <div class="s-detail-box">잠언 통독 (약 2시간 10분)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
-  <div class="acc-toggle" onclick="toggleDetail('detail1')">▼ 세부 실행계획 보기</div>
-  <div class="acc-detail" id="detail1">
-    <p>📌 전체개요 설명 — 이장형 목사</p>
-    <ul>
-      <li>30분 — 교독</li>
-      <li>30분 — 유튜브 성경통독</li>
-      <li>10분 — 휴식</li>
-      <li>30분 — 교독</li>
-      <li>30분 — 유튜브 성경통독</li>
-    </ul>
-  </div>
-</div>
+    <div class="schedule-item">
       <div class="s-header"><span class="s-time">12:30~14:00</span><span class="s-program">🍽 점심 특식</span></div>
       <div class="s-detail">구역별 식탁 교제</div>
       <span class="s-note">담당: 여전도회</span>
     </div>
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">14:00~16:30</span><span class="s-program">📖 성경통독 / 필사 (2부)</span></div>
-      <div class="s-detail-box">요한복음 전체 통독 (약 2시간)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
+      <div class="s-detail-box">요한복음 통독 (약 2시간 10분)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
+      <div class="acc-toggle" onclick="toggleDetail('detail2')">▼ 세부 실행계획 보기</div>
+      <div class="acc-detail" id="detail2">
+        <p>📌 전체개요 설명 — 최태환 목사</p>
+        <ul>
+          <li>30분 — 교독</li>
+          <li>30분 — 유튜브 성경통독</li>
+          <li>10분 — 휴식</li>
+          <li>30분 — 교독</li>
+          <li>30분 — 유튜브 성경통독</li>
+        </ul>
+      </div>
       <span class="s-note">수료자 시상</span>
     </div>
-   <div class="schedule-item">
-  <div class="s-header"><span class="s-time">14:00~16:30</span><span class="s-program">📖 성경통독 / 필사 (2부)</span></div>
-  <div class="s-detail-box">요한복음 통독 (약 2시간 10분)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
-  <div class="acc-toggle" onclick="toggleDetail('detail2')">▼ 세부 실행계획 보기</div>
-  <div class="acc-detail" id="detail2">
-    <p>📌 전체개요 설명 — 최태환 목사</p>
-    <ul>
-      <li>30분 — 교독</li>
-      <li>30분 — 유튜브 성경통독</li>
-      <li>10분 — 휴식</li>
-      <li>30분 — 교독</li>
-      <li>30분 — 유튜브 성경통독</li>
-    </ul>
-  </div>
-  <span class="s-note">수료자 시상</span>
-</div>
+    <div class="schedule-item">
       <div class="s-header"><span class="s-time">16:30~17:30</span><span class="s-program">🍵 간식 / 휴식</span></div>
       <div class="s-detail">다과 및 휴식</div>
     </div>
@@ -269,6 +236,7 @@ footer a{color:var(--yellow);text-decoration:none;}
     </div>
   </div>
 
+  <!-- DAY 3 -->
   <div class="schedule" id="day3">
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">주일</span><span class="s-program">주일 1부 예배</span></div>
@@ -279,7 +247,7 @@ footer a{color:var(--yellow);text-decoration:none;}
       <div class="s-detail">공지 예정</div>
     </div>
     <div class="schedule-item">
-      <div class="s-header"><span class="s-time">주일</span><span class="s-program">주일 3부 예배(수련회 시상 & 수료 )</span></div>
+      <div class="s-header"><span class="s-time">주일</span><span class="s-program">주일 3부 예배 (수련회 시상 & 수료)</span></div>
       <div class="s-detail">여름수련회 폐회</div>
     </div>
   </div>
