@@ -199,11 +199,11 @@ footer a{color:var(--yellow);text-decoration:none;}
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">10:00~12:30</span><span class="s-program">📖 성경통독 / 필사 (1부)</span></div>
       <div class="s-detail-box">잠언 통독 (약 2시간 10분)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
-      <div class="acc-toggle" onclick="toggleDetail('detail1')">▼ 세부 실행계획 보기</div>
+      <div class="acc-toggle" onclick="toggleDetail('detail1')">▼ 세부순서 보기</div>
       <div class="acc-detail" id="detail1">
         <p>📌 전체개요 설명 — 이장형 목사</p>
         <ul>
-          <li>30분 — 교독</li>
+          <li>30분 — 교독 및 낭독</li>
           <li>30분 — 유튜브 성경통독</li>
           <li>10분 — 휴식</li>
           <li>30분 — 교독</li>
@@ -219,18 +219,18 @@ footer a{color:var(--yellow);text-decoration:none;}
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">14:00~16:30</span><span class="s-program">📖 성경통독 / 필사 (2부)</span></div>
       <div class="s-detail-box">요한복음 통독 (약 2시간 10분)<br>필사반 신청시 노트 및 필기구 제공 (사전 신청)</div>
-      <div class="acc-toggle" onclick="toggleDetail('detail2')">▼ 세부 실행계획 보기</div>
+      <div class="acc-toggle" onclick="toggleDetail('detail2')">▼ 세부순서 보기</div>
       <div class="acc-detail" id="detail2">
         <p>📌 전체개요 설명 — 최태환 목사</p>
         <ul>
-          <li>30분 — 교독</li>
+          <li>30분 — 교독 및 낭독</li>
           <li>30분 — 유튜브 성경통독</li>
           <li>10분 — 휴식</li>
-          <li>30분 — 교독</li>
+          <li>30분 — 교독 및 낭독</li>
           <li>30분 — 유튜브 성경통독</li>
         </ul>
       </div>
-      <span class="s-note">수료자 시상</span>
+      <span class="s-note">수료자 시상(주일 3부)</span>
     </div>
     <div class="schedule-item">
       <div class="s-header"><span class="s-time">16:30~17:30</span><span class="s-program">🍵 간식 / 휴식</span></div>
@@ -288,7 +288,7 @@ footer a{color:var(--yellow);text-decoration:none;}
 </div>
 
 <section>
-  <div class="section-head"><h2>📞 각 구역장들에게 꼭 참가신청 해 주세요!</h2><div class="bar"></div></div>
+  <div class="section-head"><h2>📞 각 구역장들에게 꼭 참가신청!</h2><div class="bar"></div></div>
   <div class="contact-card">
     <span class="c-icon">📞</span>
     <h3>수련회 담당</h3>
@@ -314,7 +314,7 @@ function toggleDetail(id) {
   const el = document.getElementById(id);
   el.classList.toggle('open');
   const btn = el.previousElementSibling;
-  btn.textContent = el.classList.contains('open') ? '▲ 세부 실행계획 닫기' : '▼ 세부 실행계획 보기';
+  btn.textContent = el.classList.contains('open') ? '▲ 세부순서 닫기' : '▼ 세부순서 보기';
 }
 </script>
 </body>
