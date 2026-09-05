@@ -488,22 +488,34 @@ body{padding-bottom:68px;}
   <div class="sub-hero"><h2>성현교회 주보</h2><p>WEEKLY BULLETIN</p></div>
   <section>
     <div class="section-head"><h2>주일주보</h2><div class="bar"></div></div>
-    <div class="notice-list">
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/1p_J2fIy3OsRRjdqvqTUwPrIeiKehnLBE/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 7월 12일 주보 📄</span><span class="ndate">07.15</span></div>
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/1TjZwPiAZN42_YbRFtxrdibp3IJJ67hnQ/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 7월 05일 주보 📄</span><span class="ndate">07.15</span></div>
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/1wGaFC-RuOKTOkT2My4QSDNb6Z5FI-654/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 6월 28일 주보 📄</span><span class="ndate">06.30</span></div>
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/1DvPEnv6IEX5iVi8_4njysbrRAk-4VOH0/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 6월 21일 주보 📄</span><span class="ndate">06.23</span></div>
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/1nYrM7Geqkh2SIDfBQkfQf8dG7b6Tbww1/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 6월 14일 주보 📄</span><span class="ndate">06.15</span></div>
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/1icWHCMDCwA_hT4v-HY7K9gqS5IJwj5Iu/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 6월 07일 주보 📄</span><span class="ndate">06.08</span></div>
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/1Gl90YptgVQ6hNZcRKMuIH4AKuPXUZDCf/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 5월 31일 주보 📄</span><span class="ndate">05.31</span></div>
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/1gSjVO2F2lSBNOIfZimpAzHX-qJyO6qZD/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 5월 24일 주보 📄</span><span class="ndate">05.31</span></div>
-      <div class="notice-item" onclick="window.open('https://drive.google.com/file/d/14ToHBpnDJOeoIGLd_H-cT_1u4iRXpGGd/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 5월 17일 주보 📄</span><span class="ndate">05.17</span></div>
-      <div class="notice-item"onclick="window.open('https://drive.google.com/file/d/1Dm6QLR9luOIANkQF1cCnCVM7ErvKcPXR/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 5월 10일 주보📄</span><span class="ndate">05.10</span></div>
-      <div class="notice-item"onclick="window.open('https://drive.google.com/file/d/1rqwL--re_0inMksW-yg5d03zIoEk6BWE/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 5월 3일 주보📄</span><span class="ndate">05.03</span></div>
-      <div class="notice-item"onclick="window.open('https://drive.google.com/file/d/1kE4CgygFHOpNZ_JBjASlM-6UKB_yB7lO/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 4월 26일 주보📄</span><span class="ndate">04.26</span></div>
-      <div class="notice-item"onclick="window.open('https://drive.google.com/file/d/1W-_oyM9pi6equkVLhOcgej8T7CbwVvAI/view?usp=drive_link','_blank')"><span class="nbadge">주보</span><span class="ntitle">2026년 4월 19일 주보📄</span><span class="ndate">04.19</span></div>
-    
+        <div class="notice-list" id="bulletin-list">
+      <p style="text-align:center;color:var(--text-muted);">불러오는 중...</p>
     </div>
+
+    <script>
+    (async function() {
+      const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
+      const FOLDER_ID = '1HNb-JeXbUbzzYA0gI4NzQ8qfMFLhnED5';
+      const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+trashed=false&orderBy=createdTime desc&fields=files(id,name,createdTime,webViewLink)&key=${API_KEY}`;
+
+      const container = document.getElementById('bulletin-list');
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!data.files || data.files.length === 0) {
+          container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">등록된 주보가 없습니다.</p>';
+          return;
+        }
+        container.innerHTML = data.files.map(f => {
+          const d = new Date(f.createdTime);
+          const mmdd = `${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+          return `<div class="notice-item" onclick="window.open('${f.webViewLink}','_blank')"><span class="nbadge">주보</span><span class="ntitle">${f.name} 📄</span><span class="ndate">${mmdd}</span></div>`;
+        }).join('');
+      } catch (e) {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">주보 목록을 불러오지 못했습니다.</p>';
+      }
+    })();
+    </script>
     <p style="text-align:center;margin-top:1.5rem;font-size:0.9rem;color:var(--text-muted);font-weight:500;">※ 매주 주보가 업데이트 됩니다.</p>
   </section>
 </div>
