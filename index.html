@@ -492,30 +492,41 @@ body{padding-bottom:68px;}
       <p style="text-align:center;color:var(--text-muted);">불러오는 중...</p>
     </div>
 
-    <script>
-    (async function() {
-      const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
-      const FOLDER_ID = '1HNb-JeXbUbzzYA0gI4NzQ8qfMFLhnED5';
-      const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+trashed=false&orderBy=createdTime desc&fields=files(id,name,createdTime,webViewLink)&key=${API_KEY}`;
+   <script>
+(async function() {
+  const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
+  const FOLDER_ID = '1HNb-JeXbUbzzYA0gI4NzQ8qfMFLhnED5';
+  const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+trashed=false&fields=files(id,name,createdTime,webViewLink)&key=${API_KEY}`;
 
-      const container = document.getElementById('bulletin-list');
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        if (!data.files || data.files.length === 0) {
-          container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">등록된 주보가 없습니다.</p>';
-          return;
-        }
-        container.innerHTML = data.files.map(f => {
-          const d = new Date(f.createdTime);
-          const mmdd = `${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-          return `<div class="notice-item" onclick="window.open('${f.webViewLink}','_blank')"><span class="nbadge">주보</span><span class="ntitle">${f.name} 📄</span><span class="ndate">${mmdd}</span></div>`;
-        }).join('');
-      } catch (e) {
-        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">주보 목록을 불러오지 못했습니다.</p>';
-      }
-    })();
-    </script>
+  const container = document.getElementById('bulletin-list');
+
+  function parseDateFromName(name, fallback) {
+    const m = name.match(/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
+    if (m) return new Date(parseInt(m[1]), parseInt(m[2]) - 1, parseInt(m[3]));
+    return new Date(fallback); // 이름에서 날짜를 못 찾으면 업로드 시간으로 대체
+  }
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.files || data.files.length === 0) {
+      container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">등록된 주보가 없습니다.</p>';
+      return;
+    }
+
+    const files = data.files
+      .map(f => ({ ...f, sortDate: parseDateFromName(f.name, f.createdTime) }))
+      .sort((a, b) => b.sortDate - a.sortDate);
+
+    container.innerHTML = files.map(f => {
+      const mmdd = `${String(f.sortDate.getMonth()+1).padStart(2,'0')}.${String(f.sortDate.getDate()).padStart(2,'0')}`;
+      return `<div class="notice-item" onclick="window.open('${f.webViewLink}','_blank')"><span class="nbadge">주보</span><span class="ntitle">${f.name} 📄</span><span class="ndate">${mmdd}</span></div>`;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">주보 목록을 불러오지 못했습니다.</p>';
+  }
+})();
+</script>
     <p style="text-align:center;margin-top:1.5rem;font-size:0.9rem;color:var(--text-muted);font-weight:500;">※ 매주 주보가 업데이트 됩니다.</p>
   </section>
 </div>
