@@ -442,12 +442,26 @@ body{padding-bottom:68px;}
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
-  function pastorFromTitle(title) {
-    return title.includes('최태환') ? '최태환 목사' : '이장형 목사';
+  function pastorFrom(text) {
+    return text.includes('최태환') ? '최태환 목사' : '이장형 목사';
   }
-  function formatKoreanDate(iso) {
-    const d = new Date(iso);
-    return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
+  // 세부내용(설명)에서 날짜를 읽어옵니다. "9월6일", "9월 6일", "2026년 9월 6일" 모두 인식.
+  function parseSermonDate(description, publishedAt) {
+    const m = description.match(/(?:(\d{4})년\s*)?(\d{1,2})월\s*(\d{1,2})일/);
+    const pub = new Date(publishedAt);
+    if (!m) return pub;
+    const month = parseInt(m[2], 10) - 1;
+    const day = parseInt(m[3], 10);
+    let year = m[1] ? parseInt(m[1], 10) : pub.getFullYear();
+    let date = new Date(year, month, day);
+    // 연도 표기가 없을 때, 계산된 날짜가 업로드일보다 20일 이상 미래면 작년 날짜로 보정
+    if (!m[1] && date - pub > 20 * 24 * 60 * 60 * 1000) {
+      date = new Date(year - 1, month, day);
+    }
+    return date;
+  }
+  function formatKoreanDate(d) {
+    return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
   }
 
   try {
@@ -458,20 +472,20 @@ body{padding-bottom:68px;}
       return;
     }
 
-    const videos = data.items
-      .map(item => ({
-        videoId: item.snippet.resourceId.videoId,
-        title: item.snippet.title,
-        publishedAt: item.snippet.publishedAt
-      }))
-      .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
-      .slice(0, VIDEO_COUNT);
+    const videos = data.items.map(item => {
+      const s = item.snippet;
+      const sermonDate = parseSermonDate(s.description || '', s.publishedAt);
+      return {
+        videoId: s.resourceId.videoId,
+        title: s.title,
+        sermonDate,
+        pastor: pastorFrom(s.description || '')
+      };
+    })
+    .sort((a, b) => b.sermonDate - a.sermonDate)
+    .slice(0, VIDEO_COUNT);
 
-    container.innerHTML = videos.map(v => {
-      const dateStr = formatKoreanDate(v.publishedAt);
-      const pastor = pastorFromTitle(v.title);
-      const safeTitle = escapeHtml(v.title);
-      return `
+    container.innerHTML = videos.map(v => `
     <div style="margin-bottom:2rem;">
       <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 4px 20px rgba(13,53,114,0.15);">
         <iframe
@@ -481,16 +495,14 @@ body{padding-bottom:68px;}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
         </iframe>
       </div>
-      <p style="margin-top:0.7rem;font-size:0.95rem;font-weight:700;color:var(--primary-dark);">${dateStr} 주일 설교 중에서(${safeTitle})</p>
-      <p style="font-size:0.85rem;color:var(--text-muted);">${pastor}</p>
-    </div>`;
-    }).join('');
+      <p style="margin-top:0.7rem;font-size:0.95rem;font-weight:700;color:var(--primary-dark);">${formatKoreanDate(v.sermonDate)} 주일 설교 중에서(${escapeHtml(v.title)})</p>
+      <p style="font-size:0.85rem;color:var(--text-muted);">${v.pastor}</p>
+    </div>`).join('');
   } catch (e) {
     container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">영상을 불러오지 못했습니다.</p>';
   }
 })();
-</script>
-    <a href="https://www.youtube.com/@SungHyunChurch-l7m" target="_blank" class="yt-btn">▶ 유튜브 채널 전체보기</a>
+</script>    <a href="https://www.youtube.com/@SungHyunChurch-l7m" target="_blank" class="yt-btn">▶ 유튜브 채널 전체보기</a>
   </section>
 </div>
 <!-- BULLETIN -->
