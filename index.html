@@ -351,70 +351,76 @@ body{padding-bottom:68px;}
 <div id="notice" class="page">
   <div class="sub-hero"><h2>공지사항 / 중보기도 </h2><p>NOTICE & PRAYER</p></div>
   <section>
-    <div class="accordion-list">
+    <div class="accordion-list" id="accordion-list">
+    </div>
 
+    <script>
+    (async function() {
+      const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
+      const SHEET_ID = '1UwMKfqoWQiSKm6la6I7scHy7_SW7cItRQZsWgPsujn8';
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=D2&ranges=D43&ranges=D35&key=${API_KEY}`;
+
+      function escapeHtml(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+      function truncate(str, n) {
+        return str.length > n ? str.slice(0, n) + '…' : str;
+      }
+      function formatDate(raw) {
+        const nums = (raw.match(/\d+/g) || []);
+        if (nums.length < 3) return raw;
+        const [y, m, d] = nums;
+        return `${y}.${String(m).padStart(2, '0')}.${String(d).padStart(2, '0')}`;
+      }
+
+      const container = document.getElementById('accordion-list');
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const ranges = data.valueRanges || [];
+        const getVal = (range) => {
+          const found = ranges.find(r => r.range.includes(range));
+          return found && found.values && found.values[0] ? found.values[0][0] : '';
+        };
+
+        const dateStr = formatDate(getVal('D2'));
+        const noticeLines = getVal('D43').split('\n').map(s => s.trim()).filter(Boolean);
+        const prayerText = getVal('D35').trim();
+
+        let html = '';
+        noticeLines.forEach(line => {
+          html += `
       <div class="acc-item">
         <div class="acc-title" onclick="toggleAcc(this)">
           <span class="nbadge">공지</span>
-          <span class="ntitle">2026년 7월 공지사항</span>
-          <span class="ndate">2026.06.30</span>
+          <span class="ntitle">${escapeHtml(truncate(line, 26))}</span>
+          <span class="ndate">${dateStr}</span>
           <span class="acc-arrow">▼</span>
         </div>
-        <div class="acc-body">
-          <p>교회 3층에서는 매주 수(4:30)/금(6:30) 이음기타교실이 진행되고있습니다. 많은 관심과 기도부탁드립니다.
-          <br> 박은찬 형제의 수술과 빠른회복을 위해 합심하여 기도 부탁드립니다. </p>
-        </div>
-      </div>
+        <div class="acc-body"><p>${escapeHtml(line)}</p></div>
+      </div>`;
+        });
 
-      <div class="acc-item">
-        <div class="acc-title" onclick="toggleAcc(this)">
-          <span class="nbadge">공지</span>
-          <span class="ntitle">7월 5일 맥추 감사주일</span>
-          <span class="ndate">2026.06.30</span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body">
-          <p>7월 5일 주일은 맥추감사절로 드립니다.  2026년 상반기를 돌아보며 감사의 시간이 되길 바랍니다.</p>
-        </div>
-      </div>
-
-      <div class="acc-item">
-        <div class="acc-title" onclick="toggleAcc(this)">
-          <span class="nbadge">공지</span>
-          <span class="ntitle">2026년 교회 봉사자 모집</span>
-          <span class="ndate">2026.05.21</span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body">
-          <p> 성가대, 악기(피아노,기타,드럼등),안내,전도 각부서의 봉사자를 모집합니다.</p>
-        </div>
-      </div>
-
-      <div class="acc-item">
-        <div class="acc-title" onclick="toggleAcc(this)">
-          <span class="nbadge">공지</span>
-          <span class="ntitle">9월 1일 월삭 새벽기도회 안내</span>
-          <span class="ndate">2026.06.30</span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body">
-          <p>9월1일 월요일 전교인 월삭 새벽기도회가 있습니다. 많은참여 부탁드립니다.</p>
-        </div>
-      </div>
-
+        if (prayerText) {
+          html += `
       <div class="acc-item">
         <div class="acc-title" onclick="toggleAcc(this)">
           <span class="nbadge">중보기도</span>
-          <span class="ntitle">해외 선교사들을 위한 기도 </span>
-          <span class="ndate">2026.05.22</span>
+          <span class="ntitle">중보기도 및 병환 중인 교우</span>
+          <span class="ndate">${dateStr}</span>
           <span class="acc-arrow">▼</span>
         </div>
-        <div class="acc-body">
-          <p>인도네시아 이선순 선교사, 베트남 이강복 선교사, 카메룬 서지혜 선교사 - 복음의 문이 열리고, 재정의 어려움이 없도록 지속적 후원자들이 개발되게 하소서! </p>
-        </div>
-      </div>
+        <div class="acc-body"><p>${escapeHtml(prayerText)}</p></div>
+      </div>`;
+        }
 
-    </div>
+        container.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);">등록된 공지사항이 없습니다.</p>';
+      } catch (e) {
+        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">공지사항을 불러오지 못했습니다.</p>';
+      }
+    })();
+    </script>
   </section>
 </div>
 <!-- SERMON -->
