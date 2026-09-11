@@ -355,72 +355,90 @@ body{padding-bottom:68px;}
     </div>
 
     <script>
-    (async function() {
-      const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
-      const SHEET_ID = '1UwMKfqoWQiSKm6la6I7scHy7_SW7cItRQZsWgPsujn8';
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=D2&ranges=D43&ranges=D35&key=${API_KEY}`;
+(async function() {
+  const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
+  const SHEET_ID = '1UwMKfqoWQiSKm6la6I7scHy7_SW7cItRQZsWgPsujn8';
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=D2&ranges=D32&ranges=D33&ranges=D34&ranges=D35&ranges=D43&key=${API_KEY}`;
 
-      function escapeHtml(str) {
-        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-      }
-      function truncate(str, n) {
-        return str.length > n ? str.slice(0, n) + '…' : str;
-      }
-      function formatDate(raw) {
-        const nums = (raw.match(/\d+/g) || []);
-        if (nums.length < 3) return raw;
-        const [y, m, d] = nums;
-        return `${y}.${String(m).padStart(2, '0')}.${String(d).padStart(2, '0')}`;
-      }
-
-      const container = document.getElementById('accordion-list');
-
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        const ranges = data.valueRanges || [];
-        const getVal = (range) => {
-          const found = ranges.find(r => r.range.includes(range));
-          return found && found.values && found.values[0] ? found.values[0][0] : '';
-        };
-
-        const dateStr = formatDate(getVal('D2'));
-        const noticeLines = getVal('D43').split('\n').map(s => s.trim()).filter(Boolean);
-        const prayerText = getVal('D35').trim();
-
-        let html = '';
-        noticeLines.forEach(line => {
-          html += `
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function truncate(str, n) {
+    return str.length > n ? str.slice(0, n) + '…' : str;
+  }
+  function formatDate(raw) {
+    const nums = (raw.match(/\d+/g) || []);
+    if (nums.length < 3) return raw;
+    const [y, m, d] = nums;
+    return `${y}.${String(m).padStart(2, '0')}.${String(d).padStart(2, '0')}`;
+  }
+  function accItem(badge, title, bodyHtml, dateStr) {
+    return `
       <div class="acc-item">
         <div class="acc-title" onclick="toggleAcc(this)">
-          <span class="nbadge">공지</span>
-          <span class="ntitle">${escapeHtml(truncate(line, 26))}</span>
+          <span class="nbadge">${badge}</span>
+          <span class="ntitle">${escapeHtml(truncate(title, 26))}</span>
           <span class="ndate">${dateStr}</span>
           <span class="acc-arrow">▼</span>
         </div>
-        <div class="acc-body"><p>${escapeHtml(line)}</p></div>
+        <div class="acc-body"><p>${bodyHtml}</p></div>
       </div>`;
-        });
+  }
 
-        if (prayerText) {
-          html += `
-      <div class="acc-item">
-        <div class="acc-title" onclick="toggleAcc(this)">
-          <span class="nbadge">중보기도</span>
-          <span class="ntitle">중보기도 및 병환 중인 교우</span>
-          <span class="ndate">${dateStr}</span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body"><p>${escapeHtml(prayerText)}</p></div>
-      </div>`;
-        }
+  const container = document.getElementById('accordion-list');
 
-        container.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);">등록된 공지사항이 없습니다.</p>';
-      } catch (e) {
-        container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">공지사항을 불러오지 못했습니다.</p>';
-      }
-    })();
-    </script>
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    const ranges = data.valueRanges || [];
+    const getVal = (range) => {
+      const found = ranges.find(r => r.range.includes(range));
+      return found && found.values && found.values[0] ? found.values[0][0] : '';
+    };
+
+    const dateStr = formatDate(getVal('D2'));
+    let html = '';
+
+    // 공지사항 (D43) - 줄마다 항목 하나씩
+    const noticeLines = getVal('D43').split('\n').map(s => s.trim()).filter(Boolean);
+    noticeLines.forEach(line => {
+      html += accItem('공지', line, escapeHtml(line), dateStr);
+    });
+
+    // 이번달 대표기도자 명단 (D32) - 공지로 추가
+    const prayerRoster = getVal('D32').split('\n').map(s => s.trim()).filter(Boolean);
+    if (prayerRoster.length) {
+      const body = prayerRoster.map(line => {
+        const [d, p1, p2] = line.split(',').map(s => (s || '').trim());
+        return `${escapeHtml(d)} — 1부: ${escapeHtml(p1 || '')} / 2부: ${escapeHtml(p2 || '')}`;
+      }).join('<br>');
+      html += accItem('공지', '이번달 대표기도자 명단', body, dateStr);
+    }
+
+    // 중보기도 (D35)
+    const prayerText = getVal('D35').trim();
+    if (prayerText) {
+      html += accItem('중보기도', '중보기도 및 병환 중인 교우', escapeHtml(prayerText), dateStr);
+    }
+
+    // 해외 선교지 (D33)
+    const missionLines = getVal('D33').split('\n').map(s => s.trim()).filter(Boolean);
+    if (missionLines.length) {
+      html += accItem('중보기도', '해외 선교지', missionLines.map(escapeHtml).join('<br>'), dateStr);
+    }
+
+    // 후원단체 소개 (D34)
+    const supportLines = getVal('D34').split('\n').map(s => s.trim()).filter(Boolean);
+    if (supportLines.length) {
+      html += accItem('중보기도', '후원단체 소개', supportLines.map(escapeHtml).join('<br>'), dateStr);
+    }
+
+    container.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);">등록된 공지사항이 없습니다.</p>';
+  } catch (e) {
+    container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">공지사항을 불러오지 못했습니다.</p>';
+  }
+})();
+</script>
   </section>
 </div>
 <!-- SERMON -->
