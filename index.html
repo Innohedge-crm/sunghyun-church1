@@ -426,60 +426,70 @@ body{padding-bottom:68px;}
       <div class="bar"></div>
       <p>최근 주일 설교 영상입니다</p>
     </div>
-<!-- 영상 1 -->
-    <div style="margin-bottom:2rem;">
-      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 4px 20px rgba(13,53,114,0.15);">
-        <iframe
-          src="https://www.youtube.com/embed/gpeAUn8dD9I"
-          style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:14px;"
-          allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-        </iframe>
-      </div>
-      <p style="margin-top:0.7rem;font-size:0.95rem;font-weight:700;color:var(--primary-dark);">2026년 8월 30일 주일 설교 중에서(나를 붙드시리이다)</p>
-      <p style="font-size:0.85rem;color:var(--text-muted);">이장형 목사</p>
-    </div>
-    <!-- 영상 2 -->
-    <div style="margin-bottom:2rem;">
-      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 4px 20px rgba(13,53,114,0.15);">
-        <iframe
-          src="https://www.youtube.com/embed/2HySOiXBnf0"
-          style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:14px;"
-          allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-        </iframe>
-      </div>
-      <p style="margin-top:0.7rem;font-size:0.95rem;font-weight:700;color:var(--primary-dark);">2026년 8월 16일 주일 설교 중에서(자유롭게 하리라)</p>
-      <p style="font-size:0.85rem;color:var(--text-muted);">이장형 목사</p>
-    </div>
+<div id="sermon-list">
+  <p style="text-align:center;color:var(--text-muted);">불러오는 중...</p>
+</div>
 
-    <!-- 영상 3 -->
-    <div style="margin-bottom:2rem;">
-      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 4px 20px rgba(13,53,114,0.15);">
-        <iframe
-          src="https://www.youtube.com/embed/GNPlmk0Mrcc"
-          style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:14px;"
-          allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-        </iframe>
-      </div>
-      <p style="margin-top:0.7rem;font-size:0.95rem;font-weight:700;color:var(--primary-dark);">2026년 7월 12일 주일 설교 중에서</p>
-      <p style="font-size:0.85rem;color:var(--text-muted);">이장형 목사</p>
-    </div>
-       <!-- 영상 4 -->
-    <div style="margin-bottom:2rem;">
-      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 4px 20px rgba(13,53,114,0.15);">
-        <iframe
-          src="https://www.youtube.com/embed/byjgpSl-haY"
-          style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:14px;"
-          allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-        </iframe>
-      </div>
-      <p style="margin-top:0.7rem;font-size:0.95rem;font-weight:700;color:var(--primary-dark);">2026년 7월 5일 주일 설교 중에서</p>
-      <p style="font-size:0.85rem;color:var(--text-muted);">이장형 목사</p>
-    </div>
+<script>
+(async function() {
+  const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
+  const UPLOADS_PLAYLIST_ID = 'UUHFxc4KjfhwGjsw3mqrj0lw';
+  const VIDEO_COUNT = 4;
+  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${UPLOADS_PLAYLIST_ID}&maxResults=15&key=${API_KEY}`;
 
+  const container = document.getElementById('sermon-list');
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function pastorFromTitle(title) {
+    return title.includes('최태환') ? '최태환 목사' : '이장형 목사';
+  }
+  function formatKoreanDate(iso) {
+    const d = new Date(iso);
+    return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
+  }
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.items || data.items.length === 0) {
+      container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">등록된 영상이 없습니다.</p>';
+      return;
+    }
+
+    const videos = data.items
+      .map(item => ({
+        videoId: item.snippet.resourceId.videoId,
+        title: item.snippet.title,
+        publishedAt: item.snippet.publishedAt
+      }))
+      .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+      .slice(0, VIDEO_COUNT);
+
+    container.innerHTML = videos.map(v => {
+      const dateStr = formatKoreanDate(v.publishedAt);
+      const pastor = pastorFromTitle(v.title);
+      const safeTitle = escapeHtml(v.title);
+      return `
+    <div style="margin-bottom:2rem;">
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;box-shadow:0 4px 20px rgba(13,53,114,0.15);">
+        <iframe
+          src="https://www.youtube.com/embed/${v.videoId}"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:14px;"
+          allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+        </iframe>
+      </div>
+      <p style="margin-top:0.7rem;font-size:0.95rem;font-weight:700;color:var(--primary-dark);">${dateStr} 주일 설교 중에서(${safeTitle})</p>
+      <p style="font-size:0.85rem;color:var(--text-muted);">${pastor}</p>
+    </div>`;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">영상을 불러오지 못했습니다.</p>';
+  }
+})();
+</script>
     <a href="https://www.youtube.com/@SungHyunChurch-l7m" target="_blank" class="yt-btn">▶ 유튜브 채널 전체보기</a>
   </section>
 </div>
