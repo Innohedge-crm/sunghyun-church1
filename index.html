@@ -284,8 +284,7 @@ a.more:hover{opacity:0.7;}
   .wrow{transition:background .15s;}
 
   /* FOOTER */
-  footer{padding:3.6rem 2rem 3rem;text-align:left;}
-  footer .container{max-width:var(--maxw);margin:0 auto;}
+  footer{padding:3.6rem 2rem 3rem;}
 
   /* HOME V2 */
   .home-lead p{font-size:1.08rem;}
@@ -352,8 +351,8 @@ a.more:hover{opacity:0.7;}
       <a onclick="showPage('sermon')" id="d-sermon">설교영상</a>
       <a onclick="showPage('bulletin')" id="d-bulletin">주보</a>
       <a onclick="showPage('map')" id="d-map">오시는길</a>
+      <a onclick="showPage('offering')" id="d-offering">헌금안내</a>
     </nav>
-    <a onclick="showPage('offering')" id="d-offering" class="dn-cta">헌금안내</a>
   </div>
 </div>
 
@@ -386,20 +385,6 @@ a.more:hover{opacity:0.7;}
 
   <section>
 <div class="container">
-    <div class="section-head"><h2>교회를 소개합니다</h2><div class="bar"></div></div>
-    <div class="home-lead">
-      <p>
-        성현교회는 1980년 서울 동작구 사당동에 세워진 대한예수교장로회(합동) 소속 교회입니다.<br class="br-d">
-        말씀과 기도, 섬김과 나눔의 공동체로서 예수님을 사랑하고 이웃을 섬기는 교회를 지향합니다.
-      </p>
-      <p class="verse">"항상 기뻐하라, 쉬지 말고 기도하라, 범사에 감사하라" — 데살로니가전서 5:16~18</p>
-      <a onclick="showPage('about')" class="more">교회 소개 더 보기 →</a>
-    </div>
-  </div>
-</section>
-
-  <section class="alt">
-<div class="container">
     <div class="section-head"><h2>최근 주일 설교</h2><div class="bar"></div><p>가장 최근 주일 말씀을 함께 나눕니다</p></div>
     <div class="sermon-feature" id="home-sermon-feature">
       <p style="text-align:center;color:var(--text-muted);">불러오는 중...</p>
@@ -409,7 +394,7 @@ a.more:hover{opacity:0.7;}
 (async function() {
   const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
   const SERMON_PLAYLIST_ID = 'PLQNi2Eg27iA5_ZWnipl7Nq5_9aenwKF5J';
-  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${SERMON_PLAYLIST_ID}&maxResults=20&key=${API_KEY}`;
+  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${SERMON_PLAYLIST_ID}&maxResults=50&key=${API_KEY}`;
   const box = document.getElementById('home-sermon-feature');
 
   function escapeHtml(str) {
@@ -470,7 +455,7 @@ a.more:hover{opacity:0.7;}
   </div>
 </section>
 
-  <section>
+  <section class="alt">
 <div class="container">
     <div class="section-head"><h2>예배 시간</h2><div class="bar"></div></div>
     <div class="quick-grid">
@@ -484,7 +469,7 @@ a.more:hover{opacity:0.7;}
   </div>
 </section>
 
-  <section class="alt">
+  <section>
 <div class="container">
     <div class="section-head"><h2>공지사항 · 중보기도</h2><div class="bar"></div><p>이번 주 광고와 함께 기도할 제목입니다</p></div>
     <div class="home-notice-grid" id="home-notice-full">
@@ -750,8 +735,8 @@ a.more:hover{opacity:0.7;}
 (async function() {
   const API_KEY = 'AIzaSyDLoOfQ8uqPQIzCK5qWBx-jRcXHABW4gv4';
   const SERMON_PLAYLIST_ID = 'PLQNi2Eg27iA5_ZWnipl7Nq5_9aenwKF5J';
-  const VIDEO_COUNT = 20;
-  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${SERMON_PLAYLIST_ID}&maxResults=20&key=${API_KEY}`;
+  const VIDEO_COUNT = 11;
+  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${SERMON_PLAYLIST_ID}&maxResults=50&key=${API_KEY}`;
 
   const container = document.getElementById('sermon-list');
 
