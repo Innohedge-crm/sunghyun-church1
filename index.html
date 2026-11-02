@@ -227,6 +227,15 @@ a.more:hover{opacity:0.7;}
 .home-notice-card.prayer .hn-badge{background:var(--gold);color:var(--primary-dark);}
 .home-notice-card .hn-title{font-weight:700;color:var(--primary-dark);font-size:1rem;}
 .home-notice-card .hn-body{color:var(--text-muted);font-size:0.95rem;line-height:1.9;font-weight:500;white-space:pre-line;}
+.home-notice-card.roster{border-left-color:var(--accent);}
+.home-notice-card.roster .hn-badge{background:var(--accent);color:#fff;}
+.home-notice-card .hn-sub{font-weight:700;color:var(--primary-dark);font-size:0.92rem;margin:0.9rem 0 0.2rem;}
+.home-notice-card .hn-sub:first-of-type{margin-top:0.2rem;}
+.roster-table{width:100%;border-collapse:collapse;font-size:0.95rem;margin-top:0.3rem;}
+.roster-table th{background:var(--primary-light);color:var(--primary-dark);font-weight:700;padding:0.55rem 0.4rem;border-bottom:2px solid var(--border);}
+.roster-table td{padding:0.55rem 0.4rem;border-bottom:1px solid var(--border);text-align:center;font-weight:500;}
+.roster-table td:first-child{color:var(--primary-dark);font-weight:700;white-space:nowrap;}
+.notice-date{text-align:right;max-width:820px;margin:0 auto 0.8rem;color:var(--text-muted);font-size:0.88rem;font-weight:500;}
 
 /* ======================================================
    DESKTOP BREAKPOINT (>= 1000px)
@@ -697,7 +706,9 @@ footer{background:linear-gradient(180deg,#4a1c08,#2e1105);}
   <div class="sub-hero"><h2>공지사항 / 중보기도 </h2><p>NOTICE & PRAYER</p></div>
   <section>
 <div class="container">
-    <div class="accordion-list" id="accordion-list">
+    <p class="notice-date" id="notice-date"></p>
+    <div class="home-notice-grid" id="notice-cards">
+      <p style="text-align:center;color:var(--text-muted);">불러오는 중…</p>
     </div>
 
     <script>
@@ -709,29 +720,18 @@ footer{background:linear-gradient(180deg,#4a1c08,#2e1105);}
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
-  function truncate(str, n) {
-    return str.length > n ? str.slice(0, n) + '…' : str;
-  }
   function formatDate(raw) {
     const nums = (raw.match(/\d+/g) || []);
     if (nums.length < 3) return raw;
     const [y, m, d] = nums;
     return `${y}.${String(m).padStart(2, '0')}.${String(d).padStart(2, '0')}`;
   }
-  function accItem(badge, title, bodyHtml, dateStr) {
-    return `
-      <div class="acc-item">
-        <div class="acc-title" onclick="toggleAcc(this)">
-          <span class="nbadge">${badge}</span>
-          <span class="ntitle">${escapeHtml(truncate(title, 26))}</span>
-          <span class="ndate">${dateStr}</span>
-          <span class="acc-arrow">▼</span>
-        </div>
-        <div class="acc-body"><p>${bodyHtml}</p></div>
-      </div>`;
+  function card(type, badge, title, bodyHtml) {
+    return `<div class="home-notice-card ${type}"><div class="hn-head"><span class="hn-badge">${badge}</span><span class="hn-title">${title}</span></div>${bodyHtml}</div>`;
   }
+  const lines = (txt) => txt.split('\n').map(s => s.trim()).filter(Boolean);
 
-  const container = document.getElementById('accordion-list');
+  const box = document.getElementById('notice-cards');
 
   try {
     const res = await fetch(url);
@@ -743,45 +743,39 @@ footer{background:linear-gradient(180deg,#4a1c08,#2e1105);}
     };
 
     const dateStr = formatDate(getVal('D2'));
+    if (dateStr) document.getElementById('notice-date').textContent = dateStr + ' 기준';
     let html = '';
 
-    // 공지사항 (D43) - 줄마다 항목 하나씩
-    const noticeLines = getVal('D43').split('\n').map(s => s.trim()).filter(Boolean);
-    noticeLines.forEach(line => {
-      html += accItem('공지', line, escapeHtml(line), dateStr);
-    });
+    // 1) 이번 주 공지사항 (D43) - 한 카드에 전체 표시
+    const noticeText = getVal('D43').trim();
+    if (noticeText) {
+      html += card('', '공지', '이번 주 공지사항', `<div class="hn-body">${escapeHtml(noticeText)}</div>`);
+    }
 
-    // 이번달 대표기도자 명단 (D32) - 공지로 추가
-    const prayerRoster = getVal('D32').split('\n').map(s => s.trim()).filter(Boolean);
-    if (prayerRoster.length) {
-      const body = prayerRoster.map(line => {
+    // 2) 이번달 대표기도자 명단 (D32) - 별도 카드 + 표
+    const roster = lines(getVal('D32'));
+    if (roster.length) {
+      const rows = roster.map(line => {
         const [d, p1, p2] = line.split(',').map(s => (s || '').trim());
-        return `${escapeHtml(d)} — 1부: ${escapeHtml(p1 || '')} / 2부: ${escapeHtml(p2 || '')}`;
-      }).join('<br>');
-      html += accItem('공지', '이번달 대표기도자 명단', body, dateStr);
+        return `<tr><td>${escapeHtml(d || '')}</td><td>${escapeHtml(p1 || '')}</td><td>${escapeHtml(p2 || '')}</td></tr>`;
+      }).join('');
+      html += card('roster', '대표기도', '이번달 대표기도자 명단',
+        `<table class="roster-table"><thead><tr><th>날짜</th><th>1부</th><th>2부</th></tr></thead><tbody>${rows}</tbody></table>`);
     }
 
-    // 중보기도 (D35)
+    // 3) 중보기도 (D35) + 해외 선교지 (D33) + 후원단체 (D34) - 한 카드에 묶어서 표시
     const prayerText = getVal('D35').trim();
-    if (prayerText) {
-      html += accItem('중보기도', '중보기도 및 병환 중인 교우', escapeHtml(prayerText), dateStr);
-    }
+    const missionLines = lines(getVal('D33'));
+    const supportLines = lines(getVal('D34'));
+    let prayerBody = '';
+    if (prayerText) prayerBody += `<div class="hn-sub">병환 중인 교우</div><div class="hn-body">${escapeHtml(prayerText)}</div>`;
+    if (missionLines.length) prayerBody += `<div class="hn-sub">해외 선교지</div><div class="hn-body">${missionLines.map(escapeHtml).join('<br>')}</div>`;
+    if (supportLines.length) prayerBody += `<div class="hn-sub">후원단체</div><div class="hn-body">${supportLines.map(escapeHtml).join('<br>')}</div>`;
+    if (prayerBody) html += card('prayer', '중보기도', '함께 기도해 주세요', prayerBody);
 
-    // 해외 선교지 (D33)
-    const missionLines = getVal('D33').split('\n').map(s => s.trim()).filter(Boolean);
-    if (missionLines.length) {
-      html += accItem('중보기도', '해외 선교지', missionLines.map(escapeHtml).join('<br>'), dateStr);
-    }
-
-    // 후원단체 소개 (D34)
-    const supportLines = getVal('D34').split('\n').map(s => s.trim()).filter(Boolean);
-    if (supportLines.length) {
-      html += accItem('중보기도', '후원단체 소개', supportLines.map(escapeHtml).join('<br>'), dateStr);
-    }
-
-    container.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);">등록된 공지사항이 없습니다.</p>';
+    box.innerHTML = html || '<p style="text-align:center;color:var(--text-muted);">등록된 공지사항이 없습니다.</p>';
   } catch (e) {
-    container.innerHTML = '<p style="text-align:center;color:var(--text-muted);">공지사항을 불러오지 못했습니다.</p>';
+    box.innerHTML = '<p style="text-align:center;color:var(--text-muted);">공지사항을 불러오지 못했습니다.</p>';
   }
 })();
 </script>
