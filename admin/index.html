@@ -37,13 +37,30 @@ h2:first-child{margin-top:0}
 .card.main b{font-size:1.2rem}
 .ext::after{content:' ↗';color:var(--text-muted);font-weight:400;font-size:.85rem}
 footer{background:var(--primary-dark);color:rgba(255,255,255,.55);text-align:center;font-size:.8rem;padding:1.2rem}
+
+/* 비밀번호 */
+#gate{position:fixed;inset:0;background:var(--primary-dark);display:flex;align-items:center;justify-content:center;z-index:50;padding:1.2rem}
+#gate .box{background:#fff;border-radius:16px;padding:2rem 1.8rem;width:100%;max-width:380px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+#gate .cross{font-size:2rem;color:var(--gold);display:block;margin-bottom:.3rem}
+#gate h1{font-family:'Noto Serif KR',serif;color:var(--primary-dark);font-size:1.35rem}
+#gate p{color:var(--text-muted);font-size:.9rem;margin:.4rem 0 1.2rem}
+#gate input{width:100%;font-size:1.1rem;padding:.8rem 1rem;border:1px solid var(--border);border-radius:10px;text-align:center;font-family:inherit}
+#gate input:focus{outline:2px solid var(--primary-light);border-color:var(--accent)}
+#gate .msg{color:#b91c1c;font-size:.85rem;min-height:1.3rem;margin:.5rem 0}
+#gate button{width:100%;font-size:1.05rem;font-weight:700;padding:.8rem;border:0;border-radius:10px;background:var(--primary);color:#fff;cursor:pointer;font-family:inherit}
+#gate button:disabled{opacity:.6;cursor:wait}
+#gate a{display:inline-block;margin-top:1rem;color:var(--text-muted);font-size:.85rem}
+body.locked main,body.locked .sub{visibility:hidden}
+.hd .out{margin-left:.5rem;background:none;color:rgba(255,255,255,.7);border:0;font-size:.85rem;cursor:pointer;font-family:inherit;white-space:nowrap}
+.hd .out:hover{color:#fff}
 </style>
 </head>
-<body>
+<body class="locked">
 <header><div class="hd">
   <span class="cross">✝</span>
   <div><strong>성현교회</strong><span>SUNGHYUN CHURCH · SINCE 1980</span></div>
   <a class="home" href="/">홈페이지로</a>
+  <button class="out" id="logout" title="이 컴퓨터에서 비밀번호 지우기">로그아웃</button>
 </div></header>
 <div class="sub"><h1>관리자 메뉴</h1><p>ADMIN</p></div>
 <main>
@@ -88,5 +105,43 @@ footer{background:var(--primary-dark);color:rgba(255,255,255,.55);text-align:cen
   </div>
 </main>
 <footer>© 2026 성현교회 · 관리자 전용 페이지</footer>
+<div id="gate">
+  <div class="box">
+    <span class="cross">✝</span>
+    <h1>관리자 메뉴</h1>
+    <p>관리자 비밀번호를 입력해 주세요.<br>한 번 들어오면 이 컴퓨터에서는 다시 묻지 않습니다.</p>
+    <input type="password" id="pw" autocomplete="current-password" placeholder="비밀번호">
+    <div class="msg" id="msg"></div>
+    <button id="go">들어가기</button>
+    <a href="/">← 홈페이지로</a>
+  </div>
+</div>
+<script>
+(function () {
+  // 주보제작 앱과 같은 서버·같은 비밀번호를 씁니다
+  var SERVER = 'https://script.google.com/macros/s/AKfycbz4biSo0EtC3v1REKt9XQ9K5VzzVOG15LIMgTjS_1FfdwxspTixaKvNSc0EQOM_B-Ix/exec';
+  var KEY = 'shjubo.pw';
+  var gate = document.getElementById('gate'), pw = document.getElementById('pw'), msg = document.getElementById('msg'), go = document.getElementById('go');
+  function get() { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
+  function put(v) { try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch (e) {} }
+  function open() { gate.style.display = 'none'; document.body.classList.remove('locked'); }
+  function check(v) {
+    go.disabled = true; msg.style.color = '#555'; msg.textContent = '확인 중…';
+    return fetch(SERVER, { method: 'POST', body: JSON.stringify({ action: 'ping', pw: v }) })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        go.disabled = false;
+        if (res && res.ok) { put(v); open(); return; }
+        put(''); msg.style.color = '#b91c1c'; msg.textContent = '비밀번호가 맞지 않습니다.'; pw.value = ''; pw.focus();
+      })
+      .catch(function () { go.disabled = false; msg.style.color = '#b91c1c'; msg.textContent = '서버에 연결하지 못했습니다. 인터넷 연결을 확인하고 다시 눌러 주세요.'; });
+  }
+  go.onclick = function () { var v = pw.value.trim(); if (v) check(v); };
+  pw.onkeydown = function (e) { if (e.key === 'Enter') go.onclick(); };
+  document.getElementById('logout').onclick = function () { put(''); location.reload(); };
+  var saved = get();
+  if (saved) check(saved); else pw.focus();
+})();
+</script>
 </body>
 </html>
