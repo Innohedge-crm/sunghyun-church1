@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>관리자 메뉴 · 성현교회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#1a56a0;--primary-dark:#0d3572;--primary-light:#e8f0fb;--accent:#2979c8;--gold:#c9a84c;--text:#111;--text-muted:#555;--bg:#fff;--bg-alt:#f4f7fc;--border:#d6e2f3;--radius:14px}
+body{font-family:'Noto Sans KR',sans-serif;color:var(--text);background:var(--bg-alt);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--primary-dark);color:#fff;padding:1.1rem 1.3rem}
+.hd{max-width:880px;margin:0 auto;display:flex;align-items:center;gap:.8rem}
+.cross{font-size:1.6rem;color:var(--gold)}
+.hd strong{font-family:'Noto Serif KR',serif;font-size:1.25rem;display:block;line-height:1.2}
+.hd span{font-size:.72rem;letter-spacing:2px;color:rgba(255,255,255,.55)}
+.hd a.home{margin-left:auto;color:#fff;text-decoration:none;font-size:.9rem;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:.35rem .9rem}
+.hd a.home:hover{background:rgba(255,255,255,.1)}
+.hd a.home{white-space:nowrap}
+@media(max-width:480px){.hd span{display:none}}
+.sub{background:var(--primary);color:#fff;text-align:center;padding:1.8rem 1rem 1.6rem}
+.sub h1{font-family:'Noto Serif KR',serif;font-size:1.55rem}
+.sub p{font-size:.78rem;letter-spacing:3px;color:rgba(255,255,255,.55);margin-top:.2rem}
+main{flex:1;max-width:880px;width:100%;margin:0 auto;padding:2rem 1.2rem 3rem}
+h2{font-family:'Noto Serif KR',serif;color:var(--primary-dark);font-size:1.1rem;margin:1.6rem 0 .8rem;display:flex;align-items:center;gap:.6rem}
+h2::before{content:'';width:4px;height:1.1rem;background:var(--gold);border-radius:2px}
+h2:first-child{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.9rem}
+.card{display:flex;gap:1rem;align-items:flex-start;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.2rem;text-decoration:none;color:inherit;transition:border-color .15s,box-shadow .15s,transform .15s}
+.card:hover{border-color:var(--accent);box-shadow:0 6px 18px rgba(13,53,114,.1);transform:translateY(-1px)}
+.card .ic{flex:none;width:48px;height:48px;border-radius:12px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.card b{display:block;font-size:1.08rem;color:var(--primary-dark);margin-bottom:.15rem}
+.card small{color:var(--text-muted);font-size:.86rem;line-height:1.5;display:block}
+.card.main{border:2px solid var(--primary);background:linear-gradient(135deg,#fff 0%,var(--primary-light) 100%)}
+.card.main .ic{background:var(--primary);color:#fff}
+.card.main b{font-size:1.2rem}
+.ext::after{content:' ↗';color:var(--text-muted);font-weight:400;font-size:.85rem}
+footer{background:var(--primary-dark);color:rgba(255,255,255,.55);text-align:center;font-size:.8rem;padding:1.2rem}
+</style>
+</head>
+<body>
+<header><div class="hd">
+  <span class="cross">✝</span>
+  <div><strong>성현교회</strong><span>SUNGHYUN CHURCH · SINCE 1980</span></div>
+  <a class="home" href="/">홈페이지로</a>
+</div></header>
+<div class="sub"><h1>관리자 메뉴</h1><p>ADMIN</p></div>
+<main>
+  <h2>주보 · 예배</h2>
+  <div class="grid">
+    <a class="card main" href="jubo.html">
+      <span class="ic">📄</span>
+      <span><b>주보 제작</b><small>이번 주 순서·소식 입력, 주보 PDF와 설교PPT(1·2부, 3부) 만들기</small></span>
+    </a>
+    <a class="card" href="https://docs.google.com/spreadsheets/d/1UwMKfqoWQiSKm6la6I7scHy7_SW7cItRQZsWgPsujn8/edit" target="_blank" rel="noopener">
+      <span class="ic">📊</span>
+      <span><b class="ext">주보 구글시트</b><small>주보 제작 앱이 저장하는 시트. 홈페이지 공지·중보기도도 여기서 가져옵니다</small></span>
+    </a>
+    <a class="card" href="https://drive.google.com/drive/folders/1HNb-JeXbUbzzYA0gI4NzQ8qfMFLhnED5" target="_blank" rel="noopener">
+      <span class="ic">📁</span>
+      <span><b class="ext">주보 PDF 올리기</b><small>「2026년 O월 O일 주보」 이름으로 올리면 홈페이지 주보 메뉴에 나옵니다</small></span>
+    </a>
+  </div>
+
+  <h2>설교 영상</h2>
+  <div class="grid">
+    <a class="card" href="https://studio.youtube.com/channel/UCHFxc4KjfhwGjsw3mqrj0lw/videos" target="_blank" rel="noopener">
+      <span class="ic">▶️</span>
+      <span><b class="ext">유튜브 스튜디오</b><small>영상 올리기 · 설명란에 설교 날짜(예: 11월15일) 적기</small></span>
+    </a>
+    <a class="card" href="https://www.youtube.com/playlist?list=PLQNi2Eg27iA5_ZWnipl7Nq5_9aenwKF5J" target="_blank" rel="noopener">
+      <span class="ic">🎞️</span>
+      <span><b class="ext">설교 재생목록</b><small>여기에 넣은 영상이 홈페이지 설교영상 메뉴에 나옵니다</small></span>
+    </a>
+  </div>
+
+  <h2>홈페이지</h2>
+  <div class="grid">
+    <a class="card" href="https://github.com/Innohedge-crm/sunghyun-church1" target="_blank" rel="noopener">
+      <span class="ic">🛠️</span>
+      <span><b class="ext">홈페이지 고치기 (GitHub)</b><small>홈페이지 파일과 수정 기록</small></span>
+    </a>
+    <a class="card" href="https://analytics.google.com/" target="_blank" rel="noopener">
+      <span class="ic">📈</span>
+      <span><b class="ext">방문 통계</b><small>구글 애널리틱스</small></span>
+    </a>
+  </div>
+</main>
+<footer>© 2026 성현교회 · 관리자 전용 페이지</footer>
+</body>
+</html>
