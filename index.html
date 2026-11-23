@@ -977,7 +977,32 @@ function numberedNotice(t){
       box.innerHTML = '<p style="text-align:center;color:var(--text-muted);">악보 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>';
     });
   }
+  // 이름 속 날짜(2026년 11월 22일 / 2026.11.22 / 2026-11-22 / 20261122)를 찾아 최신순으로 정렬
+  function dateOf(name){
+    var m = String(name).match(/(20\d{2})\s*[년.\-\/]?\s*(\d{1,2})\s*[월.\-\/]?\s*(\d{1,2})/);
+    if (!m) return 0;
+    var mo = +m[2], d = +m[3];
+    if (mo < 1 || mo > 12 || d < 1 || d > 31) return 0;
+    return +m[1] * 10000 + mo * 100 + d;
+  }
+  function byNewest(nameKey, timeKey){
+    return function(a, b){
+      var da = dateOf(a[nameKey]), db = dateOf(b[nameKey]);
+      if (da || db) return (db - da) || String(a[nameKey]).localeCompare(String(b[nameKey]), 'ko', { numeric: true });
+      if (timeKey && a[timeKey] && b[timeKey]) return String(b[timeKey]).localeCompare(String(a[timeKey]));
+      return String(a[nameKey]).localeCompare(String(b[nameKey]), 'ko', { numeric: true });
+    };
+  }
   function render(groups){
+    groups = groups.slice().sort(function(a, b){
+      if (!a.updated && b.updated) return 1;      // 「기타 악보」 묶음은 맨 아래
+      if (a.updated && !b.updated) return -1;
+      return byNewest('name', 'updated')(a, b);
+    });
+    groups.forEach(function(g){
+      var dated = g.files.some(function(f){ return dateOf(f.name); });
+      g.files = g.files.slice().sort(dated ? byNewest('name', 'updated') : function(a, b){ return String(a.name).localeCompare(String(b.name), 'ko', { numeric: true }); });
+    });
     var h = '<div class="conti-top"><button id="conti-out">이 기기에서 비밀번호 지우기</button></div>';
     if (!groups.length) h += '<p style="text-align:center;color:var(--text-muted);">등록된 악보가 없습니다.</p>';
     groups.forEach(function(g){
