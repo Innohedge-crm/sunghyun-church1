@@ -231,6 +231,9 @@ a.more:hover{opacity:0.7;}
 .home-notice-card.roster .hn-badge{background:var(--accent);color:#fff;}
 .home-notice-card .hn-sub{font-weight:700;color:var(--primary-dark);font-size:0.92rem;margin:0.9rem 0 0.2rem;}
 .home-notice-card .hn-sub:first-of-type{margin-top:0.2rem;}
+.hn-list{list-style:none;margin:0;padding:0;counter-reset:hn;}
+.hn-list li{counter-increment:hn;display:flex;gap:0.55rem;color:var(--text-muted);font-size:0.95rem;line-height:1.8;font-weight:500;padding:0.25rem 0;}
+.hn-list li::before{content:counter(hn) ".";flex:none;min-width:1.4rem;color:var(--primary);font-weight:700;}
 .roster-table{width:100%;border-collapse:collapse;font-size:0.95rem;margin-top:0.3rem;}
 .roster-table th{background:var(--primary-light);color:var(--primary-dark);font-weight:700;padding:0.55rem 0.4rem;border-bottom:2px solid var(--border);}
 .roster-table td{padding:0.55rem 0.4rem;border-bottom:1px solid var(--border);text-align:center;font-weight:500;}
@@ -423,6 +426,13 @@ footer{background:linear-gradient(180deg,#0f2444,#081630);}
 </script>  
 </head>
 <body>
+<script>
+function numberedNotice(t){
+  var items=String(t).split(/\r?\n/).map(function(x){return x.trim();}).filter(Boolean);
+  return '<ol class="hn-list">'+items.map(function(x){return '<li><span>'+x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span></li>';}).join('')+'</ol>';
+}
+</script>
+
 
 <nav class="mobile-topbar">
   <div class="brand" onclick="showPage('home')">
@@ -615,7 +625,7 @@ footer{background:linear-gradient(180deg,#0f2444,#081630);}
     let html = '';
     const noticeText = getVal('D43').trim();
     if (noticeText) {
-      html += `<div class="home-notice-card"><div class="hn-head"><span class="hn-badge">공지</span><span class="hn-title">이번 주 공지사항</span></div><div class="hn-body">${escapeHtml(noticeText)}</div></div>`;
+      html += `<div class="home-notice-card"><div class="hn-head"><span class="hn-badge">공지</span><span class="hn-title">이번 주 공지사항</span></div>${numberedNotice(noticeText)}</div>`;
     }
     const prayerText = getVal('D35').trim();
     if (prayerText) {
@@ -785,7 +795,7 @@ footer{background:linear-gradient(180deg,#0f2444,#081630);}
     // 1) 이번 주 공지사항 (D43) - 한 카드에 전체 표시
     const noticeText = getVal('D43').trim();
     if (noticeText) {
-      html += card('', '공지', '이번 주 공지사항', `<div class="hn-body">${escapeHtml(noticeText)}</div>`);
+      html += card('', '공지', '이번 주 공지사항', `${numberedNotice(noticeText)}`);
     }
 
     // 2) 이번달 대표기도자 명단 (D32) - 별도 카드 + 표
