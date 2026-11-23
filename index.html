@@ -415,6 +415,20 @@ footer{background:linear-gradient(180deg,#0f2444,#081630);}
   .hero{padding-bottom:10.5rem;background-size:auto 210px,cover;background-position:36% bottom,center top;}
 }
 @media (prefers-reduced-motion:reduce){.hero-snow i{animation:none;top:var(--y,30%);}}
+
+/* ===== 찬양콘티 ===== */
+.conti-lock{max-width:380px;margin:0 auto;text-align:center;background:#fff;border:1px solid var(--border);border-radius:14px;padding:2rem 1.6rem;box-shadow:var(--shadow-sm);}
+.conti-lock p{color:var(--text-muted);line-height:1.8;margin-bottom:1rem;font-size:0.95rem;}
+.conti-lock input{width:100%;font-size:1.1rem;padding:0.8rem 1rem;border:1px solid var(--border);border-radius:10px;margin-bottom:0.8rem;text-align:center;}
+.conti-btn{background:var(--primary);color:#fff;border:0;border-radius:10px;padding:0.8rem 1.4rem;font-size:1rem;font-weight:700;cursor:pointer;width:100%;}
+.conti-msg{min-height:1.4em;margin-top:0.7rem;font-size:0.9rem;color:#b91c1c;}
+.conti-top{max-width:820px;margin:0 auto 0.6rem;text-align:right;}
+.conti-top button{background:none;border:0;color:var(--text-muted);font-size:0.85rem;text-decoration:underline;cursor:pointer;}
+.conti-group{max-width:820px;margin:0 auto 1.4rem;}
+.conti-group h3{font-size:1.05rem;color:var(--primary-dark);margin:0 0 0.4rem;padding-left:0.2rem;}
+.conti-file .ntitle{word-break:break-all;}
+.conti-file .dl{flex-shrink:0;background:var(--primary-light);color:var(--primary-dark);border-radius:8px;padding:0.35rem 0.8rem;font-size:0.85rem;font-weight:700;}
+.conti-file.busy{opacity:0.5;pointer-events:none;}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-J3M8X94N12"></script>
@@ -463,6 +477,7 @@ function numberedNotice(t){
       <a onclick="showPage('notice')" id="d-notice">공지·중보기도</a>
       <a onclick="showPage('sermon')" id="d-sermon">설교영상</a>
       <a onclick="showPage('bulletin')" id="d-bulletin">주보</a>
+      <a onclick="showPage('conti')" id="d-conti">찬양콘티</a>
       <a onclick="showPage('map')" id="d-map">오시는길</a>
       <a onclick="showPage('offering')" id="d-offering">헌금안내</a>
     </nav>
@@ -477,6 +492,7 @@ function numberedNotice(t){
   <a onclick="showPage('notice')" id="m-notice">📢 공지사항/중보기도</a>
   <a onclick="showPage('sermon')" id="m-sermon">▶ 설교영상</a>
   <a onclick="showPage('bulletin')" id="m-bulletin">📄 주보</a>
+  <a onclick="showPage('conti')" id="m-conti">🎵 찬양콘티</a>
   <a onclick="showPage('map')" id="m-map">📍 오시는길</a>
   <a onclick="showPage('offering')" id="m-offering">🙏 헌금안내</a>
 </div>
@@ -914,6 +930,93 @@ function numberedNotice(t){
   </div>
 </section>
 </div>
+<!-- CONTI -->
+<div id="conti" class="page">
+  <div class="sub-hero"><h2>찬양콘티</h2><p>PRAISE SHEET MUSIC</p></div>
+  <section>
+<div class="container">
+    <div id="conti-box"></div>
+<script>
+(function(){
+  // 찬양콘티 서버(Apps Script 웹 앱) 주소 — admin/server/Conti.gs 를 배포한 뒤 여기에 붙여 넣습니다.
+  var SERVER = 'https://script.google.com/macros/s/AKfycby-gl0X8TeB3-V8pLpPnMwmMQ9x94z5JvYl7vnyQpbx0CbAOcF6yOA9CX7kF6Oef80D/exec';
+  var KEY = 'conti-pw';
+  var box = document.getElementById('conti-box');
+  var loaded = false;
+  function getPw(){ try { return localStorage.getItem(KEY) || ''; } catch(e){ return ''; } }
+  function setPw(v){ try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch(e){} }
+  function esc(t){ return String(t).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function call(body){
+    return fetch(SERVER, { method:'POST', body: JSON.stringify(body) }).then(function(r){ return r.json(); });
+  }
+  function icon(m, n){
+    if (/pdf/i.test(m) || /\.pdf$/i.test(n)) return '📄';
+    if (/image/i.test(m)) return '🖼';
+    if (/presentation|powerpoint/i.test(m) || /\.pptx?$/i.test(n)) return '📊';
+    return '🎵';
+  }
+  function lockView(msg){
+    box.innerHTML = '<div class="conti-lock"><p>찬양팀 비밀번호를 입력해 주세요.<br>한 번 입력하면 이 기기에서는 다시 묻지 않습니다.</p>'
+      + '<input type="password" id="conti-pw" placeholder="비밀번호" autocomplete="current-password">'
+      + '<button class="conti-btn" id="conti-go">확인</button><div class="conti-msg" id="conti-msg">' + (msg || '') + '</div></div>';
+    var inp = document.getElementById('conti-pw');
+    var go = function(){ if (inp.value) load(inp.value, true); };
+    document.getElementById('conti-go').onclick = go;
+    inp.onkeydown = function(e){ if (e.key === 'Enter') go(); };
+    setTimeout(function(){ inp.focus(); }, 50);
+  }
+  function load(pw, fromForm){
+    if (SERVER.indexOf('https://') !== 0) { box.innerHTML = '<p style="text-align:center;color:var(--text-muted);">찬양콘티 메뉴를 준비하고 있습니다.</p>'; return; }
+    if (fromForm) { var m = document.getElementById('conti-msg'); if (m) { m.style.color = 'var(--text-muted)'; m.textContent = '확인 중…'; } }
+    else box.innerHTML = '<p style="text-align:center;color:var(--text-muted);">불러오는 중...</p>';
+    call({ action:'list', pw: pw }).then(function(res){
+      if (!res.ok && res.error === 'auth') { setPw(''); lockView('비밀번호가 맞지 않습니다.'); return; }
+      if (!res.ok) throw new Error(res.error);
+      setPw(pw); loaded = true; render(res.groups || []);
+    }).catch(function(){
+      box.innerHTML = '<p style="text-align:center;color:var(--text-muted);">악보 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>';
+    });
+  }
+  function render(groups){
+    var h = '<div class="conti-top"><button id="conti-out">이 기기에서 비밀번호 지우기</button></div>';
+    if (!groups.length) h += '<p style="text-align:center;color:var(--text-muted);">등록된 악보가 없습니다.</p>';
+    groups.forEach(function(g){
+      h += '<div class="conti-group">' + (g.name ? '<h3>🎼 ' + esc(g.name) + '</h3>' : '') + '<div class="notice-list">';
+      g.files.forEach(function(f){
+        h += '<div class="notice-item conti-file" data-id="' + esc(f.id) + '"><span class="nbadge">악보</span>'
+          + '<span class="ntitle">' + icon(f.mime, f.name) + ' ' + esc(f.name) + '</span><span class="dl">다운로드</span></div>';
+      });
+      h += '</div></div>';
+    });
+    box.innerHTML = h;
+    document.getElementById('conti-out').onclick = function(){ setPw(''); loaded = false; lockView(); };
+    box.querySelectorAll('.conti-file').forEach(function(el){ el.onclick = function(){ download(el); }; });
+  }
+  function download(el){
+    var label = el.querySelector('.dl'); el.classList.add('busy'); label.textContent = '받는 중…';
+    call({ action:'file', id: el.getAttribute('data-id'), pw: getPw() }).then(function(res){
+      if (!res.ok) throw new Error(res.error);
+      var bin = atob(res.data), arr = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      var url = URL.createObjectURL(new Blob([arr], { type: res.mime || 'application/octet-stream' }));
+      var a = document.createElement('a'); a.href = url; a.download = res.name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 60000);
+      label.textContent = '완료 ✓';
+    }).catch(function(){
+      label.textContent = '실패 — 다시 누르기';
+    }).then(function(){ el.classList.remove('busy'); });
+  }
+  window.contiOpen = function(){
+    if (loaded) return;
+    var pw = getPw();
+    if (pw) load(pw); else lockView();
+  };
+})();
+</script>
+  </div>
+  </section>
+</div>
 <!-- BULLETIN -->
 <div id="bulletin" class="page">
   <div class="sub-hero"><h2>성현교회 주보</h2><p>WEEKLY BULLETIN</p></div>
@@ -1033,6 +1136,7 @@ function showPage(id){
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('hamburger').classList.remove('open');
   window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='conti' && window.contiOpen) window.contiOpen();
 }
 function toggleMenu(){
   document.getElementById('mobileMenu').classList.toggle('open');
